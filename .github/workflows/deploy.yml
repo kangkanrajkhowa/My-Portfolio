@@ -50,7 +50,9 @@ jobs:
         run: npm run build
 
       - name: Résumé PDF
-        run: npm run pdf
+        run: |
+          npm run pdf
+          cp out/resume.pdf "$RUNNER_TEMP/resume.pdf"
 
       - name: End-to-end tests
         run: npm run e2e
@@ -78,6 +80,7 @@ jobs:
 
       - name: Prepare Pages artifact
         run: |
+          cp "$RUNNER_TEMP/resume.pdf" out/resume.pdf
           touch out/.nojekyll
           if [ -n "${{ vars.CUSTOM_DOMAIN }}" ]; then
             echo "${{ vars.CUSTOM_DOMAIN }}" > out/CNAME
