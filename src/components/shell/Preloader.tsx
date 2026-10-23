@@ -12,8 +12,11 @@ export function Preloader() {
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const visited = sessionStorage.getItem("kr-visited") === "1";
+    // If the page took a while to become interactive, do not add an intro on
+    // top of the wait — it delays the first meaningful paint.
+    const slowStart = performance.now() > 1800;
 
-    if (reduced || visited) {
+    if (reduced || visited || slowStart) {
       setPhase("done");
       return;
     }
@@ -23,7 +26,7 @@ export function Preloader() {
     let frame = 0;
 
     const tick = (now: number) => {
-      const progress = Math.min(1, (now - start) / 1250);
+      const progress = Math.min(1, (now - start) / 1000);
       const eased = 1 - (1 - progress) ** 3;
       setCount(Math.round(eased * 100));
 

@@ -25,13 +25,15 @@ const instrument = Instrument_Serif({
   style: ["normal", "italic"],
   variable: "--font-instrument",
   display: "swap",
+  preload: false,
 });
 
 const bengali = Noto_Serif_Bengali({
   subsets: ["bengali"],
-  weight: ["400", "600"],
+  weight: ["400"],
   variable: "--font-bengali",
-  display: "swap",
+  display: "optional",
+  preload: false,
 });
 
 export const metadata: Metadata = {
