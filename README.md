@@ -4,6 +4,10 @@ The personal portfolio of **Kangkan Rajkhowa** — fullstack developer & UI/UX d
 
 Rebuilt from scratch: a cinematic, shader-driven single page plus static case studies, a curated on-site assistant, a live GitHub dashboard and a generated résumé PDF. Every push to `main` builds, tests and publishes it.
 
+**Live:** <https://kangkanrajkhowa.github.io/My-Portfolio/>
+
+Lighthouse (mobile, live URL): **performance 95 · accessibility 100 · best practices 100 · SEO 100**, 410 KiB transferred.
+
 ---
 
 ## Stack
