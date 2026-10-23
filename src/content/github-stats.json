@@ -1,0 +1,62 @@
+{
+  "generatedAt": "2026-10-23T17:56:48.743Z",
+  "user": {
+    "login": "kangkanrajkhowa",
+    "name": "KANGKAN RAJKHOWA",
+    "publicRepos": 34,
+    "followers": 4,
+    "following": 2,
+    "createdAt": "2017-03-07T15:06:23Z"
+  },
+  "totals": {
+    "stars": 0,
+    "forks": 0,
+    "repos": 7,
+    "languages": 8
+  },
+  "languages": [
+    {
+      "name": "CSS",
+      "bytes": 6160115
+    },
+    {
+      "name": "PHP",
+      "bytes": 2408081
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 1044112
+    },
+    {
+      "name": "TypeScript",
+      "bytes": 624541
+    },
+    {
+      "name": "SCSS",
+      "bytes": 597661
+    },
+    {
+      "name": "Twig",
+      "bytes": 444238
+    },
+    {
+      "name": "Blade",
+      "bytes": 124552
+    },
+    {
+      "name": "Less",
+      "bytes": 77434
+    }
+  ],
+  "topRepos": [
+    {
+      "name": "kangkanrajkhowa",
+      "description": "Config files for my GitHub profile.",
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/kangkanrajkhowa/kangkanrajkhowa",
+      "pushedAt": "2023-01-02T10:41:32Z"
+    }
+  ]
+}
