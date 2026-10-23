@@ -127,6 +127,18 @@ The site works today at `https://<user>.github.io/My-Portfolio/`. To move it to 
 
 ---
 
+### Cloudflare Pages (alternative host)
+
+GitHub Pages is the default. If you later want edge functions, faster CDN or a server-side AI endpoint:
+
+```bash
+npm i -D wrangler
+npx wrangler pages project create my-portfolio
+npx wrangler pages deploy out --project-name my-portfolio
+```
+
+For server rendering instead of static export, install `@opennextjs/cloudflare` and follow its adapter docs — the content layer and design system do not change.
+
 ## Contact form
 
 The form posts to [Web3Forms](https://web3forms.com) (free, no backend).
