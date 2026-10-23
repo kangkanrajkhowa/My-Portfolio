@@ -339,7 +339,6 @@ export function HeroCanvas() {
     <canvas
       ref={canvasRef}
       className="size-full"
-      role="presentation"
       data-testid="hero-canvas"
       data-webgl={supported ? "true" : "false"}
     />
