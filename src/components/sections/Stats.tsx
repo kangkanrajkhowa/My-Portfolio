@@ -54,7 +54,7 @@ export function Stats() {
             { label: "Languages", value: stats.totals.languages },
             { label: "Followers", value: stats.user.followers },
           ].map((stat, index) => (
-            <Reveal key={stat.label} delay={index * 70}>
+            <Reveal key={stat.label} delay={index * 70} className="min-w-0">
               <div className="card hover-lift p-6">
                 <p className="text-[11px] uppercase tracking-[0.14em] text-muted">
                   {stat.label}
@@ -71,7 +71,7 @@ export function Stats() {
         </div>
 
         <div className="mt-4 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
-          <Reveal>
+          <Reveal className="min-w-0">
             <div className="card h-full p-6 md:p-8">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium">Language mix</p>
@@ -91,7 +91,7 @@ export function Stats() {
                 ))}
               </div>
 
-              <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3">
+              <ul className="mt-6 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
                 {languages.map((language) => (
                   <li
                     key={language.name}
@@ -113,7 +113,7 @@ export function Stats() {
             </div>
           </Reveal>
 
-          <Reveal delay={100}>
+          <Reveal delay={100} className="min-w-0">
             <div className="card h-full p-6 md:p-8">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium">Recently active</p>

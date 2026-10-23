@@ -29,6 +29,40 @@ const marqueeItems = [
 export function Hero() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [clock, setClock] = useState("");
+  const [showCanvas, setShowCanvas] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Keep the WebGL bundle off the critical path: wait for the window load
+    // event, then paint the 3D scene once the main thread is idle.
+    let idleHandle = 0;
+    let timeoutHandle = 0;
+
+    const start = () => setShowCanvas(true);
+    const schedule = () => {
+      const idle = (
+        window as Window & {
+          requestIdleCallback?: (
+            callback: () => void,
+            options?: { timeout: number },
+          ) => number;
+        }
+      ).requestIdleCallback;
+
+      if (idle) idleHandle = idle(start, { timeout: 2500 });
+      else timeoutHandle = window.setTimeout(start, 1200);
+    };
+
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+
+    return () => {
+      window.removeEventListener("load", schedule);
+      if (idleHandle) window.cancelIdleCallback?.(idleHandle);
+      if (timeoutHandle) window.clearTimeout(timeoutHandle);
+    };
+  }, []);
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -59,7 +93,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_38%,color-mix(in_oklab,var(--violet)_16%,transparent),transparent_70%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(45%_40%_at_72%_62%,color-mix(in_oklab,var(--lime)_10%,transparent),transparent_72%)]" />
         <div className="absolute inset-0 opacity-70">
-          <HeroCanvas />
+          {showCanvas && <HeroCanvas />}
         </div>
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-bg via-bg/70 to-transparent" />
       </div>

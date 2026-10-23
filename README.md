@@ -13,7 +13,7 @@ Rebuilt from scratch: a cinematic, shader-driven single page plus static case st
 | Framework | Next.js 16 (App Router, static export) |
 | UI | React 19 + TypeScript |
 | Styling | Tailwind CSS 4 (CSS-first tokens) |
-| 3D | three.js + React Three Fiber (custom GLSL point field) |
+| 3D | Hand-written WebGL2 shader (no 3D framework, no 3D dependency) |
 | Motion | GSAP + ScrollTrigger, Lenis smooth scroll, Motion |
 | UI bits | cmdk command palette, lucide icons |
 | Tooling | Biome, Vitest, Playwright, axe-core |

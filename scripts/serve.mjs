@@ -1,6 +1,7 @@
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
+import zlib from "node:zlib";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../out", import.meta.url));
@@ -65,8 +66,32 @@ const server = http.createServer((request, response) => {
     return;
   }
 
+  const ext = path.extname(file);
+  const compressible = new Set([
+    ".html",
+    ".css",
+    ".js",
+    ".mjs",
+    ".json",
+    ".svg",
+    ".txt",
+    ".xml",
+  ]);
+  const acceptsGzip = /\bgzip\b/.test(request.headers["accept-encoding"] ?? "");
+
+  if (compressible.has(ext) && acceptsGzip) {
+    response.writeHead(200, {
+      "Content-Type": types[ext] ?? "application/octet-stream",
+      "Content-Encoding": "gzip",
+      Vary: "Accept-Encoding",
+      "Cache-Control": "no-cache",
+    });
+    fs.createReadStream(file).pipe(zlib.createGzip()).pipe(response);
+    return;
+  }
+
   response.writeHead(200, {
-    "Content-Type": types[path.extname(file)] ?? "application/octet-stream",
+    "Content-Type": types[ext] ?? "application/octet-stream",
     "Cache-Control": "no-cache",
   });
   fs.createReadStream(file).pipe(response);
