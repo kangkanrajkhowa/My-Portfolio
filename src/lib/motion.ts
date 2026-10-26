@@ -1,14 +1,4 @@
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type Lenis from "lenis";
-
-let registered = false;
-
-export function registerGsap() {
-  if (registered || typeof window === "undefined") return;
-  gsap.registerPlugin(ScrollTrigger);
-  registered = true;
-}
 
 let lenisInstance: Lenis | null = null;
 
@@ -39,5 +29,3 @@ export function isCoarsePointer() {
   if (typeof window === "undefined") return false;
   return window.matchMedia("(pointer: coarse)").matches;
 }
-
-export { gsap, ScrollTrigger };

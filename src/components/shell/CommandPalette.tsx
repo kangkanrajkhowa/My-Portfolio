@@ -87,7 +87,10 @@ export function CommandPalette() {
       shouldFilter
     >
       <Command.Input placeholder="Jump to a section, project or action…" />
-      <Command.List>
+      <Command.List
+        data-lenis-prevent
+        className="overscroll-contain"
+      >
         <Command.Empty>No results found.</Command.Empty>
 
         <Command.Group heading="Sections">

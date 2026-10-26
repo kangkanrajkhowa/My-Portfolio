@@ -50,7 +50,7 @@ export const groupMeta: Record<
   ai: {
     label: "AI & ML",
     blurb:
-      "Practical AI: LLM integrations, retrieval and agentic workflows shipped into real products.",
+      "Currently learning: LLMs, model providers, retrieval, agents and automation — explored in side projects.",
     accent: "#FFD166",
   },
 };
@@ -90,7 +90,7 @@ export const skills: Skill[] = [
   // design
   { name: "Figma", group: "design", level: 5 },
   { name: "Adobe XD", group: "design", level: 4 },
-  { name: "UI/UX Design", group: "design", level: 5 },
+  { name: "Design", group: "design", level: 5 },
 
   // mobile
   { name: "Flutter", group: "mobile", level: 3 },
