@@ -7,6 +7,7 @@ import { Spotlight } from "@/components/shell/Spotlight";
 import { SmoothScroll } from "@/components/shell/SmoothScroll";
 import { CommandPalette } from "@/components/shell/CommandPalette";
 import { Toaster } from "@/components/ui/toast";
+import { BackToTop } from "@/components/shell/BackToTop";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
@@ -40,6 +41,7 @@ export default function HomePage() {
       </main>
 
       <Footer />
+      <BackToTop />
     </>
   );
 }

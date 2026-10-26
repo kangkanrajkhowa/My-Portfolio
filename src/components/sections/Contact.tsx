@@ -5,6 +5,7 @@ import { ArrowUpRight, Check, Mail, Phone, Send } from "lucide-react";
 import { profile } from "@/content/profile";
 import { socials } from "@/content/socials";
 import { socialIconMap } from "@/components/ui/brand-icons";
+import { Lottie } from "@/components/ui/Lottie";
 import { toast } from "@/components/ui/toast";
 
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
@@ -167,14 +168,20 @@ export function Contact() {
               })}
             </div>
 
-            <div className="mt-10 rounded-2xl border border-line bg-panel/50 p-5">
-              <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-muted">
-                <span className="accent-dot" />
-                {profile.availability}
-              </p>
-              <p className="mt-2 text-sm text-muted">
-                Based in {profile.location} · IST (UTC+5:30) · remote-friendly
-              </p>
+            <div className="mt-10 flex items-center gap-4 rounded-2xl border border-line bg-panel/50 p-5">
+              <div className="min-w-0">
+                <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-muted">
+                  <span className="accent-dot" />
+                  {profile.availability}
+                </p>
+                <p className="mt-2 text-sm text-muted">
+                  Based in {profile.location} · IST (UTC+5:30) · remote-friendly
+                </p>
+              </div>
+              <Lottie
+                src="/lottie/pulse.json"
+                className="size-24 shrink-0 sm:size-28"
+              />
             </div>
           </div>
 

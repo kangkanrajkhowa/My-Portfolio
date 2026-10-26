@@ -1,4 +1,3 @@
-import { ArrowUp } from "lucide-react";
 import { profile } from "@/content/profile";
 import { socials } from "@/content/socials";
 import { socialIconMap } from "@/components/ui/brand-icons";
@@ -54,17 +53,11 @@ export function Footer() {
             <span className="hidden md:inline">·</span>
             <span>No ads. No tracking. No paywall.</span>
             <span className="hidden md:inline">·</span>
-            <span>Built with Next.js, Three.js &amp; GSAP</span>
+            <span>Built with Next.js, WebGL &amp; GSAP</span>
           </div>
 
           <div className="flex items-center gap-5">
             <span className="bengali text-sm text-fg">{profile.signoff}</span>
-            <a
-              href="#top"
-              className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 transition-colors hover:border-lime hover:text-lime"
-            >
-              Back to top <ArrowUp size={12} />
-            </a>
           </div>
         </div>
 

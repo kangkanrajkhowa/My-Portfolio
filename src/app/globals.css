@@ -404,7 +404,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 70;
+  z-index: 85;
   pointer-events: none;
   border-radius: 999px;
   will-change: transform;
@@ -500,10 +500,14 @@ body {
   top: 14%;
   z-index: 81;
   width: min(660px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
   transform: translateX(-50%);
 }
 
 [cmdk-root] {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
   overflow: hidden;
   border-radius: 20px;
   border: 1px solid var(--line-strong);
@@ -527,14 +531,21 @@ body {
 }
 
 [cmdk-list] {
-  max-height: 380px;
+  max-height: min(380px, calc(100dvh - 260px));
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 0.5rem;
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--muted) 55%, transparent) transparent;
 }
 
 [cmdk-list]::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+}
+
+[cmdk-list]::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--muted) 45%, transparent);
+  border-radius: 99px;
 }
 
 [cmdk-group-heading] {

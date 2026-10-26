@@ -5,9 +5,9 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const SITE_NAME = "Kangkan Rajkhowa";
 export const SITE_TITLE =
-  "Kangkan Rajkhowa — Fullstack Developer & UI/UX Designer";
+  "Kangkan Rajkhowa — Fullstack Developer & Product Engineer";
 export const SITE_DESCRIPTION =
-  "Kangkan Rajkhowa is a fullstack developer and UI/UX designer from Guwahati, Assam. Laravel, React, PostgreSQL and practical AI — building public-sector platforms and products that last.";
+  "Kangkan Rajkhowa is a fullstack developer and product engineer from Guwahati, Assam. Laravel, React and PostgreSQL — building public-sector platforms and products that last.";
 
 /** Prefixes a public asset path with the deploy base path (GitHub Pages). */
 export function asset(path: string) {
