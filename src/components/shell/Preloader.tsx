@@ -26,7 +26,7 @@ export function Preloader() {
     let frame = 0;
 
     const tick = (now: number) => {
-      const progress = Math.min(1, (now - start) / 1000);
+      const progress = Math.min(1, (now - start) / 650);
       const eased = 1 - (1 - progress) ** 3;
       setCount(Math.round(eased * 100));
 
@@ -34,8 +34,8 @@ export function Preloader() {
         frame = requestAnimationFrame(tick);
       } else {
         sessionStorage.setItem("kr-visited", "1");
-        window.setTimeout(() => setPhase("leaving"), 220);
-        window.setTimeout(() => setPhase("done"), 1100);
+        window.setTimeout(() => setPhase("leaving"), 120);
+        window.setTimeout(() => setPhase("done"), 800);
       }
     };
 

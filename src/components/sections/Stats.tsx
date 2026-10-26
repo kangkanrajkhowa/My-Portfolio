@@ -111,48 +111,7 @@ export function Stats() {
                 ))}
               </ul>
             </div>
-          </Reveal>
-
-          <Reveal delay={100} className="min-w-0">
-            <div className="card h-full p-6 md:p-8">
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-medium">Recently active</p>
-                <a
-                  href={`https://github.com/${stats.user.login}`}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="text-[11px] text-muted transition-colors hover:text-lime"
-                >
-                  @{stats.user.login} ↗
-                </a>
-              </div>
-              <ul className="mt-4 divide-y divide-line">
-                {stats.topRepos.slice(0, 4).map((repo) => (
-                  <li key={repo.name}>
-                    <a
-                      href={repo.url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="group flex items-start justify-between gap-4 py-3"
-                    >
-                      <span className="min-w-0">
-                        <span className="block truncate text-sm transition-colors group-hover:text-lime">
-                          {repo.name}
-                        </span>
-                        <span className="mt-0.5 block truncate text-[11px] text-muted">
-                          {repo.description}
-                        </span>
-                      </span>
-                      <span className="tabular shrink-0 text-[11px] text-muted">
-                        ★ {repo.stars}
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        </div>
+          </Reveal>        </div>
       </div>
     </section>
   );

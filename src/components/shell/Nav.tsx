@@ -6,6 +6,7 @@ import { Command, Menu, X } from "lucide-react";
 import { profile } from "@/content/profile";
 import { scrollToSection } from "@/lib/motion";
 import { ThemeToggle } from "@/components/shell/ThemeToggle";
+import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -68,9 +69,7 @@ export function Nav() {
             className="group flex items-center gap-2.5 text-sm font-semibold tracking-tight"
             aria-label="Back to top"
           >
-            <span className="grid size-9 place-items-center rounded-full border border-line-strong text-xs transition-colors group-hover:border-lime group-hover:text-lime">
-              KR
-            </span>
+            <Logo className="h-10 w-auto shrink-0 rounded-xl transition-transform duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_16px_rgba(216,255,102,0.55)] sm:h-12" />
             <span className="hidden sm:block">
               {profile.firstName}
               <span className="text-lime">.</span>
@@ -115,7 +114,7 @@ export function Nav() {
               onClick={() => router.push("/resume/")}
               className="btn btn-primary btn-sm hidden sm:inline-flex"
             >
-              Résumé
+              Resume
             </button>
             <button
               type="button"
@@ -131,8 +130,9 @@ export function Nav() {
       </header>
 
       <div
+        data-lenis-prevent
         className={cn(
-          "fixed inset-0 z-[75] flex flex-col bg-bg px-6 py-6 transition-all duration-500 md:hidden",
+          "fixed inset-0 z-[75] flex flex-col overflow-y-auto overscroll-contain bg-bg px-6 py-6 transition-all duration-500 md:hidden",
           menuOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0",
@@ -179,7 +179,7 @@ export function Nav() {
             }}
             className="btn btn-primary w-full"
           >
-            Résumé
+            Resume
           </button>
           <a href={`mailto:${profile.email}`} className="btn btn-ghost w-full">
             {profile.email}
