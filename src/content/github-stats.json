@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-23T18:18:00.317Z",
+  "generatedAt": "2026-10-26T18:06:13.590Z",
   "user": {
     "login": "kangkanrajkhowa",
     "name": "KANGKAN RAJKHOWA",
-    "publicRepos": 35,
+    "publicRepos": 39,
     "followers": 4,
     "following": 2,
     "createdAt": "2017-03-07T15:06:23Z"
@@ -17,35 +17,35 @@
   "languages": [
     {
       "name": "CSS",
-      "bytes": 6004040
+      "bytes": 6174117
     },
     {
       "name": "PHP",
-      "bytes": 2303140
+      "bytes": 2408081
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 1055430
     },
     {
       "name": "TypeScript",
-      "bytes": 623732
+      "bytes": 792322
     },
     {
       "name": "SCSS",
-      "bytes": 513680
+      "bytes": 597661
     },
     {
       "name": "Twig",
       "bytes": 444238
     },
     {
-      "name": "JavaScript",
-      "bytes": 293051
+      "name": "Blade",
+      "bytes": 124552
     },
     {
-      "name": "Vue",
-      "bytes": 16540
-    },
-    {
-      "name": "Shell",
-      "bytes": 2884
+      "name": "Less",
+      "bytes": 77434
     }
   ],
   "topRepos": [
@@ -56,7 +56,7 @@
       "stars": 0,
       "forks": 0,
       "url": "https://github.com/kangkanrajkhowa/My-Portfolio",
-      "pushedAt": "2026-10-23T18:06:30Z"
+      "pushedAt": "2026-10-23T18:39:32Z"
     },
     {
       "name": "kangkanrajkhowa",

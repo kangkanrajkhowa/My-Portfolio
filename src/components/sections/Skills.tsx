@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { groupMeta, groups, skills, type SkillGroup } from "@/content/skills";
+import { Lottie } from "@/components/ui/Lottie";
 import { cn } from "@/lib/utils";
 
 const RING_RADII = [104, 152, 200];
@@ -206,13 +207,18 @@ export function Skills() {
             </ul>
 
             <div className="mt-8 rounded-2xl border border-line bg-panel/50 p-5">
+              <Lottie
+                src="/lottie/wave.json"
+                className="mb-5 h-24 w-full max-w-[300px]"
+              />
               <p className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-muted">
                 <span className="size-1.5 rounded-full bg-lime" />
-                AI &amp; ML — now part of the day job
+                AI &amp; ML — actively learning
               </p>
               <p className="mt-2 text-sm leading-relaxed text-muted">
-                LLM APIs, retrieval and agent workflows are wired into how I
-                design, build and document software — not bolted on as a demo.
+                I&apos;m learning LLM APIs, different model providers, retrieval
+                and agentic workflows by building small experiments — seeing
+                what genuinely helps ship better software.
               </p>
             </div>
           </div>

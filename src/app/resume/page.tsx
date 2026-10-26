@@ -9,9 +9,9 @@ import { socials } from "@/content/socials";
 import { asset, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Résumé",
+  title: "Resume",
   description:
-    "Résumé of Kangkan Rajkhowa — fullstack developer and UI/UX designer based in Guwahati, Assam.",
+    "Resume of Kangkan Rajkhowa — fullstack developer and product engineer based in Guwahati, Assam.",
   alternates: { canonical: absoluteUrl("/resume/") },
 };
 
@@ -38,7 +38,7 @@ export default function ResumePage() {
                 {profile.name}
               </h1>
               <p className="mt-1 text-sm text-neutral-600">
-                Fullstack Developer · UI/UX Designer
+                Fullstack Developer · Product Engineer
               </p>
             </div>
             <div className="text-right text-[11px] leading-relaxed text-neutral-600">

@@ -13,7 +13,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "who",
     answer:
-      "Kangkan Rajkhowa is a fullstack developer and UI/UX designer from Guwahati, Assam. He works as a senior developer at the National Informatics Centre (NIC) during the day and takes on freelance product work in the evenings.",
+      "Kangkan Rajkhowa is a fullstack developer and product engineer from Guwahati, Assam. He works as a senior developer at the National Informatics Centre (NIC) during the day and takes on freelance product work in the evenings.",
     keywords: ["who", "about", "kangkan", "intro", "yourself", "profile"],
     followUps: ["What is his stack?", "Show me his best projects"],
   },
@@ -52,7 +52,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "ai",
     answer:
-      "AI & ML is now a core part of his toolkit: LLM API integration (OpenAI, Gemini, Claude), prompt engineering, RAG with vector search, AI-assisted development and Python for ML. He uses agents to automate the boring parts of shipping software.",
+      "AI and ML are an active learning area for Kangkan: he is currently exploring LLM APIs and different model providers, prompt engineering, retrieval with vector search, agentic workflows and automation. He is learning by building small experiments rather than claiming production expertise yet.",
     keywords: [
       "ai",
       "ml",

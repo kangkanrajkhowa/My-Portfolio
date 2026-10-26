@@ -1,61 +1,62 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { projects } from "@/content/projects";
-import { gsap, registerGsap, ScrollTrigger } from "@/lib/motion";
 
 export function Work() {
-  const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
-  useEffect(() => {
-    registerGsap();
-    const section = sectionRef.current;
-    const track = trackRef.current;
-    if (!section || !track) return;
-
-    const media = gsap.matchMedia();
-
-    media.add(
-      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-      () => {
-        const distance = () =>
-          Math.max(0, track.scrollWidth - window.innerWidth + 24);
-
-        const tween = gsap.to(track, {
-          x: () => -distance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${distance() + window.innerHeight * 0.4}`,
-            pin: true,
-            scrub: 1,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        return () => {
-          tween.scrollTrigger?.kill();
-          tween.kill();
-          gsap.set(track, { x: 0 });
-        };
-      },
-    );
-
-    const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 600);
-
-    return () => {
-      window.clearTimeout(refresh);
-      media.revert();
-    };
+  const updateEdges = useCallback(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    setAtStart(el.scrollLeft <= 8);
+    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 8);
   }, []);
 
+  const scrollCards = (direction: -1 | 1) => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-work-card]");
+    const step = card ? card.offsetWidth + 20 : Math.min(el.clientWidth * 0.85, 500);
+    const max = el.scrollWidth - el.clientWidth;
+    const target = Math.max(0, Math.min(el.scrollLeft + direction * step, max));
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.scrollLeft = target;
+      return;
+    }
+
+    // Native smooth scrolling is unreliable inside a scroll-snap row, so
+    // ease the offset ourselves — it works the same in every browser.
+    const start = el.scrollLeft;
+    const change = target - start;
+    const started = performance.now();
+    const duration = 420;
+
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - started) / duration);
+      const eased = 1 - (1 - progress) ** 3;
+      el.scrollLeft = start + change * eased;
+      if (progress < 1) requestAnimationFrame(tick);
+      else updateEdges();
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  useEffect(() => {
+    updateEdges();
+    window.addEventListener("resize", updateEdges);
+    return () => window.removeEventListener("resize", updateEdges);
+  }, [updateEdges]);
+
   return (
-    <section id="work" ref={sectionRef} className="relative overflow-hidden">
+    <section id="work" className="relative overflow-hidden">
       <div className="flex min-h-[100svh] flex-col justify-center py-20">
         <div className="shell flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -72,10 +73,13 @@ export function Work() {
           </p>
         </div>
 
-        <div
-          className="mt-12 overflow-x-auto pb-4 no-scrollbar lg:overflow-hidden lg:pb-0"
-          data-testid="work-viewport"
-        >
+        <div className="relative mt-12">
+          <div
+            ref={viewportRef}
+            onScroll={updateEdges}
+            className="overflow-x-auto pb-4 no-scrollbar"
+            data-testid="work-viewport"
+          >
           <div
             ref={trackRef}
             className="flex snap-x snap-mandatory gap-5 pr-6 will-change-transform lg:snap-none"
@@ -90,6 +94,7 @@ export function Work() {
                 href={`/work/${project.slug}/`}
                 data-cursor
                 data-cursor-label="View"
+                data-work-card
                 className="group relative flex w-[min(80vw,500px)] shrink-0 snap-start flex-col overflow-hidden rounded-[24px] border border-line bg-panel transition-all duration-500 hover:border-line-strong"
               >
                 <div
@@ -176,14 +181,36 @@ export function Work() {
               </div>
             </div>
           </div>
+
+          </div>
+
+          {/* Arrow navigation — scrolls the row one card at a time */}
+          <button
+            type="button"
+            onClick={() => scrollCards(-1)}
+            disabled={atStart}
+            aria-label="Previous project"
+            className="absolute left-2 top-1/2 z-20 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/90 text-fg backdrop-blur-md transition-colors hover:border-lime hover:text-lime disabled:pointer-events-none disabled:opacity-30 md:flex"
+          >
+            <ArrowLeft size={18} />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollCards(1)}
+            disabled={atEnd}
+            aria-label="Next project"
+            className="absolute right-2 top-1/2 z-20 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/90 text-fg backdrop-blur-md transition-colors hover:border-lime hover:text-lime disabled:pointer-events-none disabled:opacity-30 md:flex"
+          >
+            <ArrowRight size={18} />
+          </button>
         </div>
 
         <div className="shell mt-8 flex items-center gap-3 text-[11px] text-muted">
-          <span className="hidden h-px w-16 bg-line-strong lg:block" />
-          <span className="hidden lg:inline">
-            Scroll to move through the work
+          <span className="hidden h-px w-16 bg-line-strong md:block" />
+          <span className="hidden md:inline">
+            Use the arrows to move through the work
           </span>
-          <span className="lg:hidden">Swipe through the work →</span>
+          <span className="md:hidden">Swipe through the work →</span>
         </div>
       </div>
     </section>

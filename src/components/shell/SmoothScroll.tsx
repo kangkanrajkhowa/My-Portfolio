@@ -2,17 +2,10 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
-import {
-  gsap,
-  prefersReducedMotion,
-  registerGsap,
-  ScrollTrigger,
-  setLenis,
-} from "@/lib/motion";
+import { prefersReducedMotion, setLenis } from "@/lib/motion";
 
 export function SmoothScroll() {
   useEffect(() => {
-    registerGsap();
     if (prefersReducedMotion()) return;
 
     const lenis = new Lenis({
@@ -23,14 +16,18 @@ export function SmoothScroll() {
     });
 
     setLenis(lenis);
-    lenis.on("scroll", ScrollTrigger.update);
 
-    const raf = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
+    // Own the animation loop instead of borrowing GSAP's ticker — this keeps
+    // the bundle ~50 KB lighter for the same behaviour.
+    let frame = 0;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      frame = requestAnimationFrame(raf);
+    };
+    frame = requestAnimationFrame(raf);
 
     return () => {
-      gsap.ticker.remove(raf);
+      cancelAnimationFrame(frame);
       lenis.destroy();
       setLenis(null);
     };

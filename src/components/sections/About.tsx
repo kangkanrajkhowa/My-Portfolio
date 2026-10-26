@@ -4,6 +4,7 @@ import { projects } from "@/content/projects";
 import githubStats from "@/content/github-stats.json";
 import { CountUp } from "@/components/ui/CountUp";
 import { Reveal } from "@/components/ui/Reveal";
+import { Lottie } from "@/components/ui/Lottie";
 
 export function About() {
   return (
@@ -37,9 +38,19 @@ export function About() {
                       <span className="accent-dot" /> Available
                     </span>
                   </div>
-                  <div className="mt-10 flex items-baseline gap-3">
-                    <span className="display text-7xl text-lime">KR</span>
-                    <span className="serif text-2xl text-muted">/2026</span>
+                  <div className="mt-8 flex items-center justify-between gap-4">
+                    <div className="flex items-baseline gap-2">
+                      <span className="display text-6xl text-lime sm:text-7xl">
+                        KR
+                      </span>
+                      <span className="serif text-xl text-muted md:text-2xl">
+                        /2026
+                      </span>
+                    </div>
+                    <Lottie
+                      src="/lottie/orbit.json"
+                      className="size-28 shrink-0 sm:size-32 md:size-36"
+                    />
                   </div>
                   <div className="mt-8 grid grid-cols-2 gap-4 border-t border-line pt-5 text-xs text-muted">
                     <div>

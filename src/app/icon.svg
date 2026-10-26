@@ -1,4 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#08090c"/>
-  <path d="M18 16h7v14.5L37.5 16H46L32.5 30.5 46.5 48h-9L26 34.2V48h-8z" fill="#c6f24e"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 64" role="img" aria-label="KR">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0b0f"/>
+      <stop offset="1" stop-color="#161922"/>
+    </linearGradient>
+    <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d8ff66"/>
+      <stop offset="0.55" stop-color="#8df0b0"/>
+      <stop offset="1" stop-color="#35e0f5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- badge -->
+  <rect width="76" height="64" rx="16" fill="url(#bg)"/>
+  <rect x="1" y="1" width="74" height="62" rx="15" fill="none" stroke="rgba(216,255,102,0.22)" stroke-width="1.2"/>
+
+  <!-- monogram: K + R, a little wider than tall -->
+  <g fill="none" stroke="url(#fg)" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- K -->
+    <path d="M16 14v36"/>
+    <path d="M16 32l12 10"/>
+    <path d="M16 32l12-10"/>
+    <!-- R -->
+    <path d="M40 14v36"/>
+    <path d="M40 14h8a7.5 7.5 0 0 1 0 15h-8"/>
+    <path d="M43 29l11 21"/>
+  </g>
+
+  <!-- accent dot -->
+  <circle cx="64" cy="12" r="2.6" fill="#d8ff66"/>
 </svg>
