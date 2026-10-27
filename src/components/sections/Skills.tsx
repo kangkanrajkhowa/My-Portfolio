@@ -1,11 +1,22 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { groupMeta, groups, skills, type SkillGroup } from "@/content/skills";
+import { type CSSProperties, useMemo, useState } from "react";
+import { groupMeta, groups, skills, type Skill, type SkillGroup } from "@/content/skills";
 import { Lottie } from "@/components/ui/Lottie";
 import { cn } from "@/lib/utils";
 
 const RING_RADII = [104, 152, 200];
+
+/** Depth reads as a cell treatment, not a count of filled segments. */
+const DEPTH: Record<Skill["level"], { label: string; state: string }> = {
+  5: { label: "Expert", state: "is-expert" },
+  4: { label: "Strong", state: "is-strong" },
+  3: { label: "Working", state: "is-working" },
+  2: { label: "Basic", state: "is-basic" },
+  1: { label: "Learning", state: "is-learning" },
+};
+
+const LEGEND = [5, 4, 3, 2, 1] as const;
 
 export function Skills() {
   const [activeGroup, setActiveGroup] = useState<SkillGroup | "all">("all");
@@ -20,6 +31,11 @@ export function Skills() {
   );
 
   const orbitGroups = activeGroup === "all" ? groups : [activeGroup];
+
+  const focusedSkill = useMemo(
+    () => skills.find((skill) => skill.name === hovered) ?? null,
+    [hovered],
+  );
 
   return (
     <section id="skills" className="section border-y border-line bg-bg-elev/40">
@@ -151,60 +167,91 @@ export function Skills() {
           </div>
 
           <div>
-            <div className="mb-6 flex items-baseline justify-between">
+            <div className="mb-6 flex items-baseline justify-between gap-4">
               <p className="text-xs uppercase tracking-[0.18em] text-muted">
                 {activeGroup === "all"
                   ? "Everything I work with"
                   : groupMeta[activeGroup].label}
               </p>
-              <p className="text-[11px] text-muted">
+              <p className="text-right text-[11px] text-muted">
                 {activeGroup === "all" ? "" : groupMeta[activeGroup].blurb}
               </p>
             </div>
 
-            <ul className="grid grid-cols-1 gap-x-8 gap-y-1 sm:grid-cols-2">
-              {visible.map((skill) => {
-                const meta = groupMeta[skill.group];
+            <div className="heatmap" role="group" aria-label="Skill depth by group">
+              {groups.map((group) => {
+                const meta = groupMeta[group];
+                const groupSkills = skills.filter((skill) => skill.group === group);
+
                 return (
-                  <li key={skill.name}>
-                    <button
-                      type="button"
-                      onMouseEnter={() => setHovered(skill.name)}
-                      onMouseLeave={() => setHovered(null)}
-                      onFocus={() => setHovered(skill.name)}
-                      onBlur={() => setHovered(null)}
-                      className="group flex w-full items-center justify-between gap-4 border-b border-line py-3 text-left"
-                    >
-                      <span className="flex items-center gap-2.5 text-sm">
-                        <span
-                          className="size-1.5 rounded-full transition-transform group-hover:scale-150"
-                          style={{ background: meta.accent }}
-                        />
-                        {skill.name}
-                      </span>
+                  <div
+                    key={group}
+                    className="heatmap-row"
+                    data-dim={activeGroup !== "all" && activeGroup !== group}
+                  >
+                    <p className="heatmap-label">
                       <span
-                        className="flex items-center gap-1"
-                        role="img"
-                        aria-label={`${skill.level} of 5`}
-                      >
-                        {Array.from({ length: 5 }).map((_, index) => (
-                          <span
-                            key={index}
-                            className="h-1 w-3 rounded-full transition-colors"
-                            style={{
-                              background:
-                                index < skill.level
-                                  ? meta.accent
-                                  : "color-mix(in oklab, var(--muted) 28%, transparent)",
-                            }}
+                        className="size-1.5 shrink-0 rounded-full"
+                        style={{ background: meta.accent }}
+                      />
+                      {meta.label}
+                    </p>
+
+                    <div className="heatmap-cells">
+                      {groupSkills.map((skill) => {
+                        const depth = DEPTH[skill.level];
+                        return (
+                          <button
+                            key={skill.name}
+                            type="button"
+                            className={cn(
+                              "heatmap-cell",
+                              depth.state,
+                              hovered === skill.name && "is-focused",
+                            )}
+                            style={{ "--accent": meta.accent } as CSSProperties}
+                            aria-label={`${skill.name} — ${depth.label}`}
+                            onMouseEnter={() => setHovered(skill.name)}
+                            onMouseLeave={() => setHovered(null)}
+                            onFocus={() => setHovered(skill.name)}
+                            onBlur={() => setHovered(null)}
                           />
-                        ))}
-                      </span>
-                    </button>
-                  </li>
+                        );
+                      })}
+                    </div>
+
+                    <span className="heatmap-count">{groupSkills.length}</span>
+                  </div>
                 );
               })}
-            </ul>
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-4">
+              <p className="min-h-5 text-xs text-muted" aria-live="polite">
+                {focusedSkill ? (
+                  <>
+                    <span className="text-fg">{focusedSkill.name}</span>
+                    <span className="mx-1.5 text-line-strong">·</span>
+                    {DEPTH[focusedSkill.level].label}
+                  </>
+                ) : (
+                  "Hover or focus a cell to read its depth"
+                )}
+              </p>
+
+              <ul className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                {LEGEND.map((level) => (
+                  <li key={level} className="flex items-center gap-1.5 text-[10px] text-muted">
+                    <span
+                      className={cn("heatmap-cell heatmap-legend", DEPTH[level].state)}
+                      style={{ "--accent": "var(--fg)" } as CSSProperties}
+                      aria-hidden="true"
+                    />
+                    {DEPTH[level].label}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div className="mt-8 rounded-2xl border border-line bg-panel/50 p-5">
               <Lottie

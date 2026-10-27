@@ -44,18 +44,38 @@ test.describe("command palette", () => {
 });
 
 test.describe("skills", () => {
-  test("filters the grid by group", async ({ page }) => {
+  test("filters the heatmap by group", async ({ page }) => {
     await visit(page);
     await page.locator("#skills").scrollIntoViewIfNeeded();
 
-    const grid = page.locator("#skills ul");
+    const heatmap = page.getByRole("group", { name: "Skill depth by group" });
+    const laravelRow = heatmap
+      .locator(".heatmap-row")
+      .filter({ has: page.getByRole("button", { name: /^Laravel — / }) });
 
+    await expect(heatmap.getByRole("button", { name: "Laravel — Expert" })).toBeVisible();
+
+    // Rows outside the filter are dimmed rather than removed, so the shape of
+    // the map stays readable while one group is in focus.
     await page.getByRole("button", { name: "AI & ML", exact: true }).click();
-    await expect(grid.getByText("LLM API integration")).toBeVisible();
-    await expect(grid.getByText("Laravel", { exact: true })).toHaveCount(0);
+    await expect(laravelRow).toHaveAttribute("data-dim", "true");
+    await expect(
+      heatmap.getByRole("button", { name: "LLM API integration — Strong" }),
+    ).toBeVisible();
 
     await page.getByRole("button", { name: "All", exact: true }).click();
-    await expect(grid.getByText("Laravel", { exact: true })).toBeVisible();
+    await expect(laravelRow).toHaveAttribute("data-dim", "false");
+  });
+
+  test("reads out depth when a cell is focused", async ({ page }) => {
+    await visit(page);
+    await page.locator("#skills").scrollIntoViewIfNeeded();
+
+    const readout = page.locator('#skills [aria-live="polite"]');
+    await page.getByRole("button", { name: "PostgreSQL — Expert" }).focus();
+
+    await expect(readout).toContainText("PostgreSQL");
+    await expect(readout).toContainText("Expert");
   });
 });
 

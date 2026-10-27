@@ -1,5 +1,10 @@
+/**
+ * Canonical origin. Falls back to the production domain rather than localhost so a
+ * hand-built `out/` (zipped and uploaded through a hosting file manager) never ships
+ * canonical, Open Graph or sitemap URLs pointing at a developer machine.
+ */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://kangkan.dev";
 
 export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 

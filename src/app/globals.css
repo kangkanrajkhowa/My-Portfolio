@@ -397,6 +397,131 @@ body {
   transform: translate(-50%, -50%);
 }
 
+/* --------------------------------------------------------- skill heatmap */
+
+.heatmap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.heatmap-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-block: 0.34rem;
+  transition: opacity 0.25s var(--ease-out-expo);
+}
+
+.heatmap-row[data-dim="true"] {
+  opacity: 0.28;
+}
+
+.heatmap-label {
+  display: flex;
+  width: 6.8rem;
+  flex: none;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.heatmap-cells {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/*
+ * Depth is the cell treatment itself — no fill counts, no progress bars.
+ * Opacity steps are spaced so the ramp stays monotonic: a level 3 cell always
+ * reads stronger than a level 2 one, which an outline would not guarantee.
+ */
+.heatmap-cell {
+  --accent: var(--lime);
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: transform 0.18s var(--ease-out-expo), background 0.18s,
+    border-color 0.18s;
+}
+
+.heatmap-cell.is-expert {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.heatmap-cell.is-strong {
+  background: color-mix(in oklab, var(--accent) 72%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 85%, transparent);
+}
+
+.heatmap-cell.is-working {
+  background: color-mix(in oklab, var(--accent) 44%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+}
+
+.heatmap-cell.is-basic {
+  background: color-mix(in oklab, var(--accent) 20%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 26%, transparent);
+}
+
+.heatmap-cell.is-learning {
+  background: transparent;
+  border: 1px dashed color-mix(in oklab, var(--accent) 42%, transparent);
+}
+
+.heatmap-cell:hover,
+.heatmap-cell.is-focused {
+  transform: scale(1.4);
+  border-color: var(--fg);
+}
+
+.heatmap-count {
+  margin-left: auto;
+  padding-left: 0.75rem;
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+  /* Full muted token, not a dimmed mix — 9.9px text still needs 4.5:1. */
+  color: var(--muted);
+}
+
+.heatmap-legend {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.heatmap-legend:hover {
+  transform: none;
+  border-color: inherit;
+}
+
+@media (max-width: 640px) {
+  .heatmap-label {
+    width: 5.2rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+  }
+  .heatmap-cell {
+    width: 13px;
+    height: 13px;
+    border-radius: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heatmap-cell:hover,
+  .heatmap-cell.is-focused {
+    transform: none;
+  }
+}
+
 /* --------------------------------------------------------------- cursor */
 
 .cursor-dot,

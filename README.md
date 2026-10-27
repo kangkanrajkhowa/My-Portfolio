@@ -4,9 +4,9 @@ The personal portfolio of **Kangkan Rajkhowa** — fullstack developer & UI/UX d
 
 Rebuilt from scratch: a cinematic, shader-driven single page plus static case studies, a curated on-site assistant, a live GitHub dashboard and a generated résumé PDF. Every push to `main` builds, tests and publishes it.
 
-**Live:** <https://kangkanrajkhowa.github.io/My-Portfolio/>
+**Live:** <https://kangkan.dev>
 
-Lighthouse (mobile, live URL): **performance 95 · accessibility 100 · best practices 100 · SEO 100**, 410 KiB transferred.
+Lighthouse (mobile, last measured on the GitHub Pages build): **performance 95 · accessibility 100 · best practices 100 · SEO 100**, 410 KiB transferred. Re-run after the hosting cutover — see [deploy/README.md](deploy/README.md).
 
 ---
 
@@ -18,10 +18,10 @@ Lighthouse (mobile, live URL): **performance 95 · accessibility 100 · best pra
 | UI | React 19 + TypeScript |
 | Styling | Tailwind CSS 4 (CSS-first tokens) |
 | 3D | Hand-written WebGL2 shader (no 3D framework, no 3D dependency) |
-| Motion | GSAP + ScrollTrigger, Lenis smooth scroll, Motion |
-| UI bits | cmdk command palette, lucide icons |
+| Motion | Lenis smooth scroll, CSS transitions, IntersectionObserver reveals — no animation library |
+| UI bits | cmdk command palette, lucide icons, lottie-web (lazy, in-view only) |
 | Tooling | Biome, Vitest, Playwright, axe-core |
-| Hosting | GitHub Pages (static) + GitHub Actions |
+| Hosting | Static export on shared hosting (Hostinger / BigRock / Namecheap / GoDaddy) via GitHub Actions |
 
 No tracking, no analytics, no ads, no cookies. That is a feature.
 
@@ -56,6 +56,7 @@ npm run serve   # http://127.0.0.1:4173
 | `npm run stats` | Refresh `src/content/github-stats.json` |
 | `npm run pdf` | Regenerate `out/resume.pdf` from `/resume/` |
 | `npm run og` | Regenerate `public/og.png` |
+| `npm run package:static` | Zip `out/` + a server config for a file-manager upload |
 
 ---
 
@@ -66,7 +67,7 @@ Everything you would normally change lives in `src/content/`:
 | File | Contains |
 | --- | --- |
 | `profile.ts` | Name, roles, bio, location, email, phone, availability |
-| `skills.ts` | Skills with group + level (1–5), including the **AI & ML** group |
+| `skills.ts` | Skills with group + depth (1–5), rendered as the capability heatmap; includes the **AI & ML** group |
 | `projects.ts` | Case studies: summary, problem, approach, outcome, stack, links |
 | `experience.ts` | Timeline entries |
 | `socials.ts` | Footer/contact links |
@@ -75,69 +76,42 @@ Everything you would normally change lives in `src/content/`:
 
 Commit and push; the workflow handles the rest.
 
----
+---## Deployment
 
-## Deployment
+The site is a static export: `npm run build` writes `out/`, and any web server can serve it. There is no Node runtime, database or server code in production.
 
-`.github/workflows/deploy.yml` runs on every push to `main`:
+Target: **`kangkan.dev`** at a domain root on shared hosting (Hostinger, BigRock, Namecheap, GoDaddy). The complete cutover guide — which server config to upload, DNS records, SSL, verification and troubleshooting — lives in **[deploy/README.md](deploy/README.md)**.
 
-1. `npm ci`
-2. Biome lint
-3. `tsc --noEmit`
-4. Vitest
-5. Test build + Playwright suite (desktop, mobile, axe)
-6. Deploy build (with the correct base path / site URL)
-7. Résumé PDF, `.nojekyll`, optional `CNAME`
-8. Publish to GitHub Pages
+Two deployment workflows are provided. Enable **one** and delete the other:
 
-`.github/workflows/ci.yml` runs the same checks on pull requests without publishing.
+| Workflow | Use when | Required secrets |
+| --- | --- | --- |
+| [deploy-ftp.yml](.github/workflows/deploy-ftp.yml) | Any of the four hosts | `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, `FTP_SERVER_DIR` |
+| [deploy-sftp.yml](.github/workflows/deploy-sftp.yml) | The plan includes SSH | `SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY`, `SSH_KNOWN_HOSTS`, `SSH_PATH` |
 
-### First-time GitHub setup
+Both build on every push to `main` — lint, typecheck, unit tests, static export, résumé PDF, server config — and then publish. Until the matching secrets exist the deploy job skips itself with a notice rather than failing red.
 
-```bash
-gh repo create My-Portfolio --public --source=. --remote=origin --push
-```
+Set the optional repository variable `SITE_URL` only if the domain changes; it defaults to `https://kangkan.dev`.
 
-Then set **Settings → Pages → Source: GitHub Actions**.
-
----
-
-## Custom domain
-
-The site works today at `https://<user>.github.io/My-Portfolio/`. To move it to `kangkanrajkhowa.in` (or any `.in` / `.co` / `.net`):
-
-1. Buy the domain (Cloudflare Registrar, Namecheap, …).
-2. Add DNS records:
-
-   | Type | Name | Value |
-   | --- | --- | --- |
-   | A | `@` | `185.199.108.153` |
-   | A | `@` | `185.199.109.153` |
-   | A | `@` | `185.199.110.153` |
-   | A | `@` | `185.199.111.153` |
-   | CNAME | `www` | `<user>.github.io` |
-
-3. In the repository: **Settings → Secrets and variables → Actions → Variables**, add
-   `CUSTOM_DOMAIN = yourdomain.in`
-4. Re-run the **Deploy to GitHub Pages** workflow.
-5. Under **Settings → Pages → Custom domain**, confirm the domain (the workflow writes `CNAME` on every deploy).
-6. Wait for the certificate (usually under 30 minutes), then enable **Enforce HTTPS**.
-
-`SITE_URL` and `BASE_PATH` are derived automatically: with `CUSTOM_DOMAIN` set the site is served from the root; without it, from `/My-Portfolio`.
-
----
-
-### Cloudflare Pages (alternative host)
-
-GitHub Pages is the default. If you later want edge functions, faster CDN or a server-side AI endpoint:
+### Deploying by hand
 
 ```bash
-npm i -D wrangler
-npx wrangler pages project create my-portfolio
-npx wrangler pages deploy out --project-name my-portfolio
+npm run build
+npm run package:static                    # Apache / LiteSpeed (.htaccess)
+npm run package:static -- --server nginx  # config written beside the zip
+npm run package:static -- --server iis
 ```
 
-For server rendering instead of static export, install `@opennextjs/cloudflare` and follow its adapter docs — the content layer and design system do not change.
+`dist/kangkan.dev-static.zip` is ready for a file-manager upload. A local build still emits the production canonical URL — `SITE_URL` falls back to the real domain, never to localhost.
+
+### DNS and SSL
+
+1. Buy `kangkan.dev`, add it in the hosting panel, and point DNS at the host (its nameservers, or an `A` record for `@` plus a `CNAME` for `www`).
+2. Enable **AutoSSL / Let's Encrypt** and wait for the certificate. `.dev` is on the HSTS preload list, so HTTPS is not optional — a missing certificate makes the domain look completely offline.
+3. Enable **Force HTTPS** in the panel, then upload the server config and files.
+4. Run the verification commands in [deploy/README.md](deploy/README.md#5-verify-the-deploy) and confirm `content-encoding: br`.
+
+GitHub Pages is retired: its workflow has been deleted, so no further builds publish there. The old `github.io` site keeps serving its last deployment until you unpublish it under **Settings → Pages**.
 
 ## Contact form
 
@@ -175,7 +149,8 @@ src/
     ui/           reveal, counters, toasts, brand icons
   content/        typed content — the only files you normally edit
   lib/            ask matcher, motion helpers, site constants, utils
-scripts/          GitHub stats, static server, PDF + OG generation
+deploy/           per-host server configs (Apache/.htaccess, nginx, IIS) + cutover guide
+scripts/          GitHub stats, static server, PDF + OG generation, static packager
 e2e/              Playwright specs (smoke, a11y, mobile)
 unit/             Vitest specs
 ```
@@ -184,6 +159,7 @@ unit/             Vitest specs
 
 ## Notes
 
-- TypeScript is pinned to the version `create-next-app` shipped (5.x). TypeScript 7 is available but not required here.
+- TypeScript stays on 5.9 on purpose. TypeScript 7's npm package is the native port and no longer ships the JS compiler API that Next.js resolves, so `next build` aborts on it; support is canary-only behind an experimental flag as of Next 16.4.3.
+- `out/_next` is ~1.3 MB of uncompressed JS/CSS. The `.htaccess` and nginx configs turn on Brotli/gzip — without them, shared hosting serves all of it raw.
 - The 3D hero is lazy-loaded and skipped when WebGL is unavailable or `prefers-reduced-motion` is set.
 - `src/content/github-stats.json` is refreshed at build time; if the GitHub API is unreachable the last committed values are kept.
