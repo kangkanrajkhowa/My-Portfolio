@@ -1,0 +1,102 @@
+# =============================================================================
+# kangkan.dev — Apache 2.4 and LiteSpeed
+#
+# Upload this file to the document root of the site (usually public_html) and
+# rename it to `.htaccess`. Works unchanged on Hostinger (LiteSpeed), BigRock,
+# Namecheap and GoDaddy (cPanel/Apache) — LiteSpeed reads .htaccess directives.
+#
+# If the site 500s after upload, the host restricts one of these directives via
+# AllowOverride. Comment out the section named in the error_log and re-upload.
+# =============================================================================
+
+DirectoryIndex index.html
+
+# MultiViews would resolve /work/foo to /work/foo.html before the trailing-slash
+# redirect below ever runs, producing duplicate URLs.
+Options -MultiViews -Indexes
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Canonical host: strip www (this hop also upgrades the scheme).
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+  # 2. Force HTTPS. Required for .dev, which is on the HSTS preload list —
+  #    plain HTTP is never even attempted by the browser.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # 3. Trailing slash on extensionless URLs. The export writes
+  #    /work/slug/index.html, so the public URL must end in a slash. This keeps
+  #    trailingSlash: true honest and prevents /work/slug and /work/slug/ from
+  #    both resolving to the same page.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]{2,5}$
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.*)$ /$1/ [R=301,L]
+</IfModule>
+
+# --------------------------------------------------------------- compression
+# The single biggest win on shared hosting: out/_next is ~1.3 MB of raw JS/CSS
+# and most hosts ship with compression off. Brotli where the host has it,
+# gzip everywhere else. Compressed formats are excluded deliberately.
+
+# woff2 is already compressed, so it is deliberately absent from both lists.
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml \
+    text/javascript application/javascript application/json application/xml \
+    image/svg+xml application/manifest+json
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml \
+    text/javascript application/javascript application/json application/xml \
+    image/svg+xml application/manifest+json
+</IfModule>
+
+# ------------------------------------------------------------------- caching
+
+<IfModule mod_setenvif.c>
+  # Fingerprinted build output (out/_next/static/…) never changes for a given URL.
+  SetEnvIf Request_URI "^/_next/static/" IMMUTABLE_ASSET
+  # RSC payloads used by client-side navigation: revalidate every time.
+  SetEnvIf Request_URI "\.txt$" REVALIDATE
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=31536000, immutable" env=IMMUTABLE_ASSET
+  Header set Cache-Control "public, max-age=0, must-revalidate" env=REVALIDATE
+
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# --------------------------------------------------------------- private files
+# Block dotfiles (.env, .git, editor backups). `.well-known` is a directory, so
+# AutoSSL's HTTP-01 challenge under /.well-known/acme-challenge/ still resolves
+# and certificates keep renewing.
+
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# ---------------------------------------------------------------- mime types
+
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType font/woff2 .woff2
+  AddType image/svg+xml .svg
+</IfModule>

@@ -1,0 +1,115 @@
+name: Deploy to shared hosting (SFTP)
+
+# Builds the static export and mirrors out/ to the host over SSH + rsync.
+# Faster than FTP and it removes stale files, but needs SSH on the plan
+# (included on Hostinger Business and above, and most cPanel resellers).
+#
+# Required repository secrets:
+#   SSH_HOST          e.g. 145.14.xxx.xxx or the server hostname
+#   SSH_USER          the cPanel/SSH account name
+#   SSH_PRIVATE_KEY   the whole private key, including the BEGIN/END lines
+#   SSH_KNOWN_HOSTS   output of: ssh-keyscan -p 22 <SSH_HOST>
+#   SSH_PATH          absolute document root, e.g. /home/u123/domains/kangkan.dev/public_html
+#
+# Optional repository secrets:
+#   SSH_PORT          defaults to 22 (shared hosts often use 65002 or 2222)
+#
+# Optional repository variable:
+#   SITE_URL          defaults to https://kangkan.dev
+#
+# Delete this file if you deploy over FTP (deploy-ftp.yml) instead.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-shared
+  cancel-in-progress: false
+
+jobs:
+  configure:
+    name: Check deploy secrets
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - id: check
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+          SSH_PATH: ${{ secrets.SSH_PATH }}
+        run: |
+          if [ -n "$SSH_HOST" ] && [ -n "$SSH_USER" ] && [ -n "$SSH_PRIVATE_KEY" ] && [ -n "$SSH_KNOWN_HOSTS" ] && [ -n "$SSH_PATH" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Deploy skipped::SSH secrets are not configured, so nothing was published."
+          fi
+
+  deploy:
+    name: Build and publish
+    needs: configure
+    if: needs.configure.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test
+
+      - name: Build (static export)
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://kangkan.dev' }}
+          NEXT_PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
+
+      - name: Résumé PDF
+        run: npm run pdf
+
+      - name: Apply Apache / LiteSpeed config
+        run: cp deploy/apache/.htaccess out/.htaccess
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+          if_key_exists: fail
+
+      - name: Mirror to the host
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PATH: ${{ secrets.SSH_PATH }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+        run: |
+          rsync -az --delete --human-readable \
+            --exclude '.well-known/' \
+            --exclude '.ftp-deploy-sync-state.json' \
+            -e "ssh -p $SSH_PORT -o StrictHostKeyChecking=yes" \
+            out/ "$SSH_USER@$SSH_HOST:$SSH_PATH/"

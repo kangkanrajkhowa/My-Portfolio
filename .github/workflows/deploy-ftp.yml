@@ -1,0 +1,109 @@
+name: Deploy to shared hosting (FTP)
+
+# Builds the static export and syncs out/ to a shared host over FTPS.
+# Works on Hostinger, BigRock, Namecheap and GoDaddy.
+#
+# Required repository secrets:
+#   FTP_SERVER      e.g. ftp.kangkan.dev (the hostname from your hosting panel)
+#   FTP_USERNAME    the FTP account for the site
+#   FTP_PASSWORD    that account's password
+#   FTP_SERVER_DIR  absolute target directory, WITH a trailing slash, e.g. /public_html/
+#
+# Optional repository variable:
+#   SITE_URL        defaults to https://kangkan.dev
+#
+# Delete this file if you deploy over SFTP (deploy-sftp.yml) instead.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-shared
+  cancel-in-progress: false
+
+jobs:
+  configure:
+    name: Check deploy secrets
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - id: check
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          if [ -n "$FTP_SERVER" ] && [ -n "$FTP_USERNAME" ] && [ -n "$FTP_PASSWORD" ] && [ -n "$FTP_SERVER_DIR" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Deploy skipped::FTP secrets are not configured, so nothing was published."
+          fi
+
+  deploy:
+    name: Build and publish
+    needs: configure
+    if: needs.configure.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test
+
+      - name: Build (static export)
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://kangkan.dev' }}
+          NEXT_PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
+
+      - name: Résumé PDF
+        run: npm run pdf
+
+      - name: Apply Apache / LiteSpeed config
+        run: cp deploy/apache/.htaccess out/.htaccess
+
+      - name: Publish
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # FTPS (explicit TLS). If the host only offers plain FTP, switch this
+          # to `ftp` — and accept that credentials travel unencrypted.
+          protocol: ftps
+          port: 21
+          local-dir: ./out/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          # Removes files on the server that no longer exist locally. Safe for the
+          # document root this workflow owns; disable it if you keep other files there.
+          dangerous-clean-slate: false
+          exclude: |
+            **/.DS_Store
+            **/.git*
+            **/.git*/**
