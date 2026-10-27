@@ -53,8 +53,5 @@ next-env.d.ts
 /freebuff-sites-build/
 /.open-next/
 /.wrangler/
-<<<<<<< HEAD
-=======
 /freebuff.open-next.config.ts
 /freebuff.wrangler.jsonc
->>>>>>> c7e8b89ef13dc78967fb1bea22be24f9785341d2
