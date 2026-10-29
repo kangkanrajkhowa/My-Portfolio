@@ -54,11 +54,11 @@ test.describe("skills", () => {
     const laravel = items.filter({ hasText: "Laravel" });
     await expect(laravel).toHaveCount(1);
     await expect(laravel).toContainText("Expert");
-    await expect(laravel.locator('.skill-seg[data-on="true"]')).toHaveCount(5);
+    await expect(laravel.locator('.skill-bar[data-on="true"]')).toHaveCount(5);
 
     const flutter = items.filter({ hasText: "Flutter" });
     await expect(flutter).toContainText("Working");
-    await expect(flutter.locator('.skill-seg[data-on="true"]')).toHaveCount(3);
+    await expect(flutter.locator('.skill-bar[data-on="true"]')).toHaveCount(3);
   });
 
   test("filters the skill list by group", async ({ page }) => {

@@ -470,39 +470,95 @@ body {
   --accent: var(--lime);
   display: flex;
   flex: none;
+  align-items: flex-end;
   gap: 3px;
+  height: 21px;
   margin-left: auto;
 }
 
-.skill-seg {
-  width: 13px;
-  height: 5px;
+.skill-bar {
+  width: 4px;
   border-radius: 999px;
-  background: color-mix(in oklab, var(--fg) 13%, transparent);
-  transition: background 0.18s, width 0.18s;
+  background: color-mix(in oklab, var(--fg) 17%, transparent);
+  transform-origin: bottom center;
+  /* Delays are staggered per bar so hovers ripple left to right. */
+  transition:
+    transform 0.42s var(--ease-out-expo),
+    box-shadow 0.25s;
+  transition-delay: calc(var(--i, 0) * 40ms);
 }
 
-.skill-seg[data-on="true"] {
-  background: var(--accent);
+/*
+ * A descending staircase, not equal segments: a full run reads as one solid
+ * rising block, and the unfilled tail shrinks away instead of doubling the
+ * visual weight of a low skill.
+ */
+.skill-bar:nth-child(1) {
+  height: 100%;
+}
+.skill-bar:nth-child(2) {
+  height: 82%;
+}
+.skill-bar:nth-child(3) {
+  height: 66%;
+}
+.skill-bar:nth-child(4) {
+  height: 50%;
+}
+.skill-bar:nth-child(5) {
+  height: 34%;
 }
 
-.skill-item[data-active="true"] .skill-seg {
-  width: 15px;
+.skill-bar[data-on="true"] {
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--accent) 55%, transparent),
+    var(--accent)
+  );
+  box-shadow: 0 0 7px -1px color-mix(in oklab, var(--accent) 55%, transparent);
+}
+
+.skill-block[data-visible="true"] .skill-bar {
+  animation: bar-rise 0.62s var(--ease-out-expo) backwards;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@keyframes bar-rise {
+  from {
+    transform: scaleY(0.1);
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.skill-item[data-active="true"] .skill-bar[data-on="true"] {
+  transform: scaleY(1.14);
+  box-shadow: 0 0 12px -1px color-mix(in oklab, var(--accent) 70%, transparent);
 }
 
 @media (max-width: 640px) {
   .skill-name {
     font-size: 0.78rem;
   }
-  .skill-seg {
-    width: 11px;
+  .skill-meter {
+    height: 18px;
+    gap: 2.5px;
+  }
+  .skill-bar {
+    width: 3px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skill-seg,
-  .skill-item[data-active="true"] .skill-seg {
-    width: 13px;
+  .skill-block[data-visible="true"] .skill-bar,
+  .skill-item[data-active="true"] .skill-bar[data-on="true"] {
+    animation: none;
+    transform: none;
     transition: none;
   }
 }
