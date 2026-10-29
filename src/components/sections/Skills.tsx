@@ -1,6 +1,12 @@
 "use client";
 
-import { type CSSProperties, useMemo, useState } from "react";
+import {
+  type CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { groupMeta, groups, skills, type Skill, type SkillGroup } from "@/content/skills";
 import { Lottie } from "@/components/ui/Lottie";
 import { cn } from "@/lib/utils";
@@ -21,6 +27,37 @@ const STEPS = [1, 2, 3, 4, 5] as const;
 export function Skills() {
   const [activeGroup, setActiveGroup] = useState<SkillGroup | "all">("all");
   const [hovered, setHovered] = useState<string | null>(null);
+  const indexRef = useRef<HTMLDivElement>(null);
+
+  // Bars rise once, group by group, as each block scrolls in. Marked on the
+  // DOM node rather than in state so the cascade never re-triggers on filter.
+  useEffect(() => {
+    const root = indexRef.current;
+    if (!root) return;
+
+    const blocks = Array.from(
+      root.querySelectorAll<HTMLElement>(".skill-block"),
+    );
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      for (const block of blocks) block.dataset.visible = "true";
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          (entry.target as HTMLElement).dataset.visible = "true";
+          observer.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+
+    for (const block of blocks) observer.observe(block);
+    return () => observer.disconnect();
+  }, []);
 
   const visible = useMemo(
     () =>
@@ -175,7 +212,7 @@ export function Skills() {
               </p>
             </div>
 
-            <div className="skills-index">
+            <div className="skills-index" ref={indexRef}>
               {groups.map((group) => {
                 const meta = groupMeta[group];
                 const groupSkills = skills.filter((skill) => skill.group === group);
@@ -206,13 +243,13 @@ export function Skills() {
                           onMouseLeave={() => setHovered(null)}
                         >
                           <span className="skill-name">{skill.name}</span>
-                          <span className="skill-meter">
+                          <span className="skill-meter" aria-hidden="true">
                             {STEPS.map((step) => (
                               <span
                                 key={step}
-                                className="skill-seg"
+                                className="skill-bar"
                                 data-on={step <= skill.level}
-                                aria-hidden="true"
+                                style={{ "--i": step - 1 } as CSSProperties}
                               />
                             ))}
                           </span>
@@ -226,8 +263,8 @@ export function Skills() {
             </div>
 
             <p className="mt-5 border-t border-line pt-4 text-[11px] text-muted">
-              Every bar is five steps, from learning a tool to shipping with it
-              daily.
+              Five bars per skill — rising from learning a tool to shipping with
+              it daily.
             </p>
 
             <div className="mt-8 rounded-2xl border border-line bg-panel/50 p-5">
