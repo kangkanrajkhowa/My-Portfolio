@@ -294,6 +294,11 @@ export function HeroCanvas() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // The shader keeps 4,200 points moving; there is no reason to burn GPU on
+    // it while the hero is scrolled past or the tab is in the background.
+    let onScreen = true;
+    let paused = false;
+
     const render = (now: number) => {
       const delta = Math.min(0.05, (now - last) / 1000);
       last = now;
@@ -318,11 +323,34 @@ export function HeroCanvas() {
       if (!reduced) frame = requestAnimationFrame(render);
     };
 
+    const setPaused = (next: boolean) => {
+      if (paused === next) return;
+      paused = next;
+      if (paused) {
+        cancelAnimationFrame(frame);
+        return;
+      }
+      if (reduced) return;
+      last = performance.now();
+      frame = requestAnimationFrame(render);
+    };
+
+    const syncRunState = () => setPaused(document.hidden || !onScreen);
+
+    const intersection = new IntersectionObserver(([entry]) => {
+      onScreen = entry?.isIntersecting ?? true;
+      syncRunState();
+    });
+    intersection.observe(canvas);
+    document.addEventListener("visibilitychange", syncRunState);
+
     frame = requestAnimationFrame(render);
     setSupported(true);
 
     return () => {
       cancelAnimationFrame(frame);
+      intersection.disconnect();
+      document.removeEventListener("visibilitychange", syncRunState);
       window.removeEventListener("pointermove", onPointerMove);
       resizeObserver.disconnect();
       themeObserver.disconnect();
