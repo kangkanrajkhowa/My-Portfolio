@@ -12,10 +12,6 @@ export function formatCompact(value: number) {
   }).format(value);
 }
 
-export function pad(value: number) {
-  return value.toString().padStart(2, "0");
-}
-
 /** Turns a free-text query into normalised tokens for the knowledge matcher. */
 export function tokenize(input: string) {
   return input
@@ -24,8 +20,4 @@ export function tokenize(input: string) {
     .split(/\s+/)
     .map((token) => token.replace(/^[.-]+|[.-]+$/g, ""))
     .filter(Boolean);
-}
-
-export function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
 }
