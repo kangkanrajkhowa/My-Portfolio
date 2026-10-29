@@ -397,128 +397,113 @@ body {
   transform: translate(-50%, -50%);
 }
 
-/* --------------------------------------------------------- skill heatmap */
+/* ------------------------------------------------------------ skill index */
 
-.heatmap {
+.skills-index {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
+  gap: 1.55rem;
 }
 
-.heatmap-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding-block: 0.34rem;
+.skill-block {
   transition: opacity 0.25s var(--ease-out-expo);
 }
 
-.heatmap-row[data-dim="true"] {
-  opacity: 0.28;
+.skill-block[data-dim="true"] {
+  opacity: 0.42;
 }
 
-.heatmap-label {
+.skill-block-label {
   display: flex;
-  width: 6.8rem;
-  flex: none;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
   font-size: 0.62rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-.heatmap-cells {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-/*
- * Depth is the cell treatment itself — no fill counts, no progress bars.
- * Opacity steps are spaced so the ramp stays monotonic: a level 3 cell always
- * reads stronger than a level 2 one, which an outline would not guarantee.
- */
-.heatmap-cell {
-  --accent: var(--lime);
-  width: 16px;
-  height: 16px;
-  border-radius: 5px;
-  border: 1px solid transparent;
-  background: transparent;
-  transition: transform 0.18s var(--ease-out-expo), background 0.18s,
-    border-color 0.18s;
-}
-
-.heatmap-cell.is-expert {
-  background: var(--accent);
-  border-color: var(--accent);
-}
-
-.heatmap-cell.is-strong {
-  background: color-mix(in oklab, var(--accent) 72%, transparent);
-  border-color: color-mix(in oklab, var(--accent) 85%, transparent);
-}
-
-.heatmap-cell.is-working {
-  background: color-mix(in oklab, var(--accent) 44%, transparent);
-  border-color: color-mix(in oklab, var(--accent) 55%, transparent);
-}
-
-.heatmap-cell.is-basic {
-  background: color-mix(in oklab, var(--accent) 20%, transparent);
-  border-color: color-mix(in oklab, var(--accent) 26%, transparent);
-}
-
-.heatmap-cell.is-learning {
-  background: transparent;
-  border: 1px dashed color-mix(in oklab, var(--accent) 42%, transparent);
-}
-
-.heatmap-cell:hover,
-.heatmap-cell.is-focused {
-  transform: scale(1.4);
-  border-color: var(--fg);
-}
-
-.heatmap-count {
+.skill-block-count {
   margin-left: auto;
-  padding-left: 0.75rem;
-  font-size: 0.62rem;
   font-variant-numeric: tabular-nums;
-  /* Full muted token, not a dimmed mix — 9.9px text still needs 4.5:1. */
-  color: var(--muted);
 }
 
-.heatmap-legend {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
+.skill-items {
+  display: grid;
+  gap: 0 1.75rem;
 }
 
-.heatmap-legend:hover {
-  transform: none;
-  border-color: inherit;
+@media (min-width: 560px) {
+  .skill-items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-block: 0.42rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--line) 55%, transparent);
+  transition: border-color 0.2s;
+}
+
+.skill-item[data-active="true"] {
+  border-bottom-color: var(--line-strong);
+}
+
+.skill-name {
+  overflow: hidden;
+  font-size: 0.82rem;
+  color: var(--fg);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.skill-item[data-active="true"] .skill-name {
+  color: var(--accent, var(--lime));
+}
+
+.skill-meter {
+  --accent: var(--lime);
+  display: flex;
+  flex: none;
+  gap: 3px;
+  margin-left: auto;
+}
+
+.skill-seg {
+  width: 13px;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--fg) 13%, transparent);
+  transition: background 0.18s, width 0.18s;
+}
+
+.skill-seg[data-on="true"] {
+  background: var(--accent);
+}
+
+.skill-item[data-active="true"] .skill-seg {
+  width: 15px;
 }
 
 @media (max-width: 640px) {
-  .heatmap-label {
-    width: 5.2rem;
-    font-size: 0.56rem;
-    letter-spacing: 0.1em;
+  .skill-name {
+    font-size: 0.78rem;
   }
-  .heatmap-cell {
-    width: 13px;
-    height: 13px;
-    border-radius: 4px;
+  .skill-seg {
+    width: 11px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .heatmap-cell:hover,
-  .heatmap-cell.is-focused {
-    transform: none;
+  .skill-seg,
+  .skill-item[data-active="true"] .skill-seg {
+    width: 13px;
+    transition: none;
   }
 }
 

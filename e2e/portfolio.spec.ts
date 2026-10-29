@@ -44,38 +44,43 @@ test.describe("command palette", () => {
 });
 
 test.describe("skills", () => {
-  test("filters the heatmap by group", async ({ page }) => {
+  test("names every skill individually with its depth", async ({ page }) => {
     await visit(page);
     await page.locator("#skills").scrollIntoViewIfNeeded();
 
-    const heatmap = page.getByRole("group", { name: "Skill depth by group" });
-    const laravelRow = heatmap
-      .locator(".heatmap-row")
-      .filter({ has: page.getByRole("button", { name: /^Laravel — / }) });
+    const items = page.locator("#skills .skill-item");
+    await expect(items).toHaveCount(34);
 
-    await expect(heatmap.getByRole("button", { name: "Laravel — Expert" })).toBeVisible();
+    const laravel = items.filter({ hasText: "Laravel" });
+    await expect(laravel).toHaveCount(1);
+    await expect(laravel).toContainText("Expert");
+    await expect(laravel.locator('.skill-seg[data-on="true"]')).toHaveCount(5);
 
-    // Rows outside the filter are dimmed rather than removed, so the shape of
-    // the map stays readable while one group is in focus.
-    await page.getByRole("button", { name: "AI & ML", exact: true }).click();
-    await expect(laravelRow).toHaveAttribute("data-dim", "true");
-    await expect(
-      heatmap.getByRole("button", { name: "LLM API integration — Strong" }),
-    ).toBeVisible();
-
-    await page.getByRole("button", { name: "All", exact: true }).click();
-    await expect(laravelRow).toHaveAttribute("data-dim", "false");
+    const flutter = items.filter({ hasText: "Flutter" });
+    await expect(flutter).toContainText("Working");
+    await expect(flutter.locator('.skill-seg[data-on="true"]')).toHaveCount(3);
   });
 
-  test("reads out depth when a cell is focused", async ({ page }) => {
+  test("filters the skill list by group", async ({ page }) => {
     await visit(page);
     await page.locator("#skills").scrollIntoViewIfNeeded();
 
-    const readout = page.locator('#skills [aria-live="polite"]');
-    await page.getByRole("button", { name: "PostgreSQL — Expert" }).focus();
+    const backend = page
+      .locator("#skills .skill-block")
+      .filter({ hasText: "Backend" });
 
-    await expect(readout).toContainText("PostgreSQL");
-    await expect(readout).toContainText("Expert");
+    await expect(backend.getByRole("listitem").filter({ hasText: "Laravel" })).toBeVisible();
+
+    // Blocks outside the filter are dimmed rather than removed, so the shape of
+    // the section stays readable while one group is in focus.
+    await page.getByRole("button", { name: "AI & ML", exact: true }).click();
+    await expect(backend).toHaveAttribute("data-dim", "true");
+    await expect(
+      page.locator("#skills .skill-item").filter({ hasText: "LLM API integration" }),
+    ).toContainText("Strong");
+
+    await page.getByRole("button", { name: "All", exact: true }).click();
+    await expect(backend).toHaveAttribute("data-dim", "false");
   });
 });
 

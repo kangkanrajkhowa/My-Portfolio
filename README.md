@@ -67,7 +67,7 @@ Everything you would normally change lives in `src/content/`:
 | File | Contains |
 | --- | --- |
 | `profile.ts` | Name, roles, bio, location, email, phone, availability |
-| `skills.ts` | Skills with group + depth (1–5), rendered as the capability heatmap; includes the **AI & ML** group |
+| `skills.ts` | Skills with group + depth (1–5), each rendered as a named row with a five-step depth meter; includes the **AI & ML** group |
 | `projects.ts` | Case studies: summary, problem, approach, outcome, stack, links |
 | `experience.ts` | Timeline entries |
 | `socials.ts` | Footer/contact links |

@@ -16,7 +16,7 @@ const DEPTH: Record<Skill["level"], { label: string; state: string }> = {
   1: { label: "Learning", state: "is-learning" },
 };
 
-const LEGEND = [5, 4, 3, 2, 1] as const;
+const STEPS = [1, 2, 3, 4, 5] as const;
 
 export function Skills() {
   const [activeGroup, setActiveGroup] = useState<SkillGroup | "all">("all");
@@ -31,11 +31,6 @@ export function Skills() {
   );
 
   const orbitGroups = activeGroup === "all" ? groups : [activeGroup];
-
-  const focusedSkill = useMemo(
-    () => skills.find((skill) => skill.name === hovered) ?? null,
-    [hovered],
-  );
 
   return (
     <section id="skills" className="section border-y border-line bg-bg-elev/40">
@@ -173,12 +168,14 @@ export function Skills() {
                   ? "Everything I work with"
                   : groupMeta[activeGroup].label}
               </p>
-              <p className="text-right text-[11px] text-muted">
-                {activeGroup === "all" ? "" : groupMeta[activeGroup].blurb}
+              <p className="max-w-[15rem] text-right text-[11px] text-muted">
+                {activeGroup === "all"
+                  ? `${skills.length} skills · ${groups.length} groups`
+                  : groupMeta[activeGroup].blurb}
               </p>
             </div>
 
-            <div className="heatmap" role="group" aria-label="Skill depth by group">
+            <div className="skills-index">
               {groups.map((group) => {
                 const meta = groupMeta[group];
                 const groupSkills = skills.filter((skill) => skill.group === group);
@@ -186,72 +183,52 @@ export function Skills() {
                 return (
                   <div
                     key={group}
-                    className="heatmap-row"
+                    className="skill-block"
                     data-dim={activeGroup !== "all" && activeGroup !== group}
                   >
-                    <p className="heatmap-label">
+                    <p className="skill-block-label">
                       <span
                         className="size-1.5 shrink-0 rounded-full"
                         style={{ background: meta.accent }}
                       />
                       {meta.label}
+                      <span className="skill-block-count">{groupSkills.length}</span>
                     </p>
 
-                    <div className="heatmap-cells">
-                      {groupSkills.map((skill) => {
-                        const depth = DEPTH[skill.level];
-                        return (
-                          <button
-                            key={skill.name}
-                            type="button"
-                            className={cn(
-                              "heatmap-cell",
-                              depth.state,
-                              hovered === skill.name && "is-focused",
-                            )}
-                            style={{ "--accent": meta.accent } as CSSProperties}
-                            aria-label={`${skill.name} — ${depth.label}`}
-                            onMouseEnter={() => setHovered(skill.name)}
-                            onMouseLeave={() => setHovered(null)}
-                            onFocus={() => setHovered(skill.name)}
-                            onBlur={() => setHovered(null)}
-                          />
-                        );
-                      })}
-                    </div>
-
-                    <span className="heatmap-count">{groupSkills.length}</span>
+                    <ul className="skill-items">
+                      {groupSkills.map((skill) => (
+                        <li
+                          key={skill.name}
+                          className="skill-item"
+                          style={{ "--accent": meta.accent } as CSSProperties}
+                          data-active={hovered === skill.name}
+                          onMouseEnter={() => setHovered(skill.name)}
+                          onMouseLeave={() => setHovered(null)}
+                        >
+                          <span className="skill-name">{skill.name}</span>
+                          <span className="skill-meter">
+                            {STEPS.map((step) => (
+                              <span
+                                key={step}
+                                className="skill-seg"
+                                data-on={step <= skill.level}
+                                aria-hidden="true"
+                              />
+                            ))}
+                          </span>
+                          <span className="sr-only">{DEPTH[skill.level].label}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 );
               })}
             </div>
 
-            <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-4">
-              <p className="min-h-5 text-xs text-muted" aria-live="polite">
-                {focusedSkill ? (
-                  <>
-                    <span className="text-fg">{focusedSkill.name}</span>
-                    <span className="mx-1.5 text-line-strong">·</span>
-                    {DEPTH[focusedSkill.level].label}
-                  </>
-                ) : (
-                  "Hover or focus a cell to read its depth"
-                )}
-              </p>
-
-              <ul className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                {LEGEND.map((level) => (
-                  <li key={level} className="flex items-center gap-1.5 text-[10px] text-muted">
-                    <span
-                      className={cn("heatmap-cell heatmap-legend", DEPTH[level].state)}
-                      style={{ "--accent": "var(--fg)" } as CSSProperties}
-                      aria-hidden="true"
-                    />
-                    {DEPTH[level].label}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="mt-5 border-t border-line pt-4 text-[11px] text-muted">
+              Every bar is five steps, from learning a tool to shipping with it
+              daily.
+            </p>
 
             <div className="mt-8 rounded-2xl border border-line bg-panel/50 p-5">
               <Lottie
