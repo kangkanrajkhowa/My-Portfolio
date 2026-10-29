@@ -395,6 +395,16 @@ body {
 .orbit-chip > span {
   display: inline-block;
   transform: translate(-50%, -50%);
+  border-color: color-mix(in oklab, var(--accent, var(--lime)) 34%, var(--line));
+  background: color-mix(in oklab, var(--accent, var(--lime)) 12%, transparent);
+  color: color-mix(in oklab, var(--accent, var(--lime)) 62%, var(--fg));
+}
+
+.orbit-chip > span.is-on {
+  border-color: var(--accent, var(--lime));
+  background: color-mix(in oklab, var(--accent, var(--lime)) 22%, transparent);
+  color: var(--accent, var(--lime));
+  box-shadow: 0 0 20px -6px var(--accent, var(--lime));
 }
 
 /* ------------------------------------------------------------ skill index */
@@ -417,11 +427,22 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.35rem;
   font-size: 0.62rem;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: color-mix(in oklab, var(--accent, var(--lime)) 85%, var(--fg));
+}
+
+.skill-block-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: none;
+  border-radius: 999px;
+  background: var(--accent, var(--lime));
+  box-shadow: 0 0 9px 0
+    color-mix(in oklab, var(--accent, var(--lime)) 75%, transparent);
 }
 
 .skill-block-count {
@@ -446,11 +467,22 @@ body {
   gap: 0.6rem;
   padding-block: 0.42rem;
   border-bottom: 1px solid color-mix(in oklab, var(--line) 55%, transparent);
-  transition: border-color 0.2s;
+  transition:
+    background 0.28s var(--ease-out-expo),
+    border-color 0.2s;
 }
 
 .skill-item[data-active="true"] {
-  border-bottom-color: var(--line-strong);
+  border-bottom-color: color-mix(
+    in oklab,
+    var(--accent, var(--lime)) 50%,
+    var(--line-strong)
+  );
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--accent, var(--lime)) 15%, transparent),
+    transparent 78%
+  );
 }
 
 .skill-name {
@@ -466,79 +498,95 @@ body {
   color: var(--accent, var(--lime));
 }
 
-.skill-meter {
-  --accent: var(--lime);
-  display: flex;
-  flex: none;
-  align-items: flex-end;
-  gap: 3px;
-  height: 21px;
-  margin-left: auto;
-}
-
-.skill-bar {
-  width: 4px;
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--fg) 17%, transparent);
-  transform-origin: bottom center;
-  /* Delays are staggered per bar so hovers ripple left to right. */
-  transition:
-    transform 0.42s var(--ease-out-expo),
-    box-shadow 0.25s;
-  transition-delay: calc(var(--i, 0) * 40ms);
-}
-
 /*
- * A descending staircase, not equal segments: a full run reads as one solid
- * rising block, and the unfilled tail shrinks away instead of doubling the
- * visual weight of a low skill.
+ * One track per skill, filled to depth. A wide, tinted capsule reads as a
+ * quantity at a glance, where a thin sliver did not.
  */
-.skill-bar:nth-child(1) {
-  height: 100%;
-}
-.skill-bar:nth-child(2) {
-  height: 82%;
-}
-.skill-bar:nth-child(3) {
-  height: 66%;
-}
-.skill-bar:nth-child(4) {
-  height: 50%;
-}
-.skill-bar:nth-child(5) {
-  height: 34%;
+.skill-meter {
+  position: relative;
+  flex: 1;
+  max-width: 124px;
+  height: 8px;
+  margin-left: auto;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--accent, var(--lime)) 13%, transparent);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--accent, var(--lime)) 20%, transparent);
 }
 
-.skill-bar[data-on="true"] {
+.skill-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    repeating-linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0.18) 0 2px,
+      transparent 2px 7px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--accent, var(--lime)) 50%, transparent),
+      var(--accent, var(--lime))
+    );
+  box-shadow: 0 0 14px -2px
+    color-mix(in oklab, var(--accent, var(--lime)) 85%, transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition:
+    transform 1s var(--ease-out-expo),
+    filter 0.25s;
+  transition-delay: calc(var(--i, 0) * 45ms);
+}
+
+/* A glassy highlight along the top edge keeps the track from reading flat. */
+.skill-meter::after {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto;
+  height: 42%;
+  z-index: 2;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent);
+  pointer-events: none;
+}
+
+.skill-block[data-visible="true"] .skill-fill {
+  transform: scaleX(var(--fill, 1));
+}
+
+/* A light sweep crosses the fill while its row is hovered. */
+.skill-sheen {
+  position: absolute;
+  inset: 0;
   background: linear-gradient(
-    to top,
-    color-mix(in oklab, var(--accent) 55%, transparent),
-    var(--accent)
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
   );
-  box-shadow: 0 0 7px -1px color-mix(in oklab, var(--accent) 55%, transparent);
+  opacity: 0;
+  transform: translateX(-100%);
 }
 
-.skill-block[data-visible="true"] .skill-bar {
-  animation: bar-rise 0.62s var(--ease-out-expo) backwards;
-  animation-delay: calc(var(--i, 0) * 45ms);
+.skill-item[data-active="true"] .skill-fill {
+  filter: brightness(1.14) saturate(1.15);
 }
 
-@keyframes bar-rise {
+.skill-item[data-active="true"] .skill-sheen {
+  animation: meter-sheen 0.9s var(--ease-out-expo);
+}
+
+@keyframes meter-sheen {
   from {
-    transform: scaleY(0.1);
-    opacity: 0;
-  }
-  55% {
-    opacity: 1;
+    opacity: 0.85;
+    transform: translateX(-100%);
   }
   to {
-    transform: scaleY(1);
+    opacity: 0;
+    transform: translateX(100%);
   }
-}
-
-.skill-item[data-active="true"] .skill-bar[data-on="true"] {
-  transform: scaleY(1.14);
-  box-shadow: 0 0 12px -1px color-mix(in oklab, var(--accent) 70%, transparent);
 }
 
 @media (max-width: 640px) {
@@ -546,20 +594,19 @@ body {
     font-size: 0.78rem;
   }
   .skill-meter {
-    height: 18px;
-    gap: 2.5px;
-  }
-  .skill-bar {
-    width: 3px;
+    max-width: 92px;
+    height: 7px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skill-block[data-visible="true"] .skill-bar,
-  .skill-item[data-active="true"] .skill-bar[data-on="true"] {
-    animation: none;
-    transform: none;
+  .skill-fill {
+    transform: scaleX(var(--fill, 1));
     transition: none;
+  }
+  .skill-item[data-active="true"] .skill-sheen {
+    animation: none;
+    opacity: 0;
   }
 }
 
