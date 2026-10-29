@@ -22,8 +22,6 @@ const DEPTH: Record<Skill["level"], { label: string; state: string }> = {
   1: { label: "Learning", state: "is-learning" },
 };
 
-const STEPS = [1, 2, 3, 4, 5] as const;
-
 export function Skills() {
   const [activeGroup, setActiveGroup] = useState<SkillGroup | "all">("all");
   const [hovered, setHovered] = useState<string | null>(null);
@@ -117,7 +115,7 @@ export function Skills() {
         </div>
 
         <div className="mt-14 grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
-          <div className="relative hidden md:block">
+          <div className="relative hidden self-start md:sticky md:top-28 md:block">
             <div className="orbit-stage">
               {RING_RADII.map((radius, index) => (
                 <div
@@ -171,17 +169,16 @@ export function Skills() {
                           <span
                             className={cn(
                               "rounded-full border px-2.5 py-1 text-[10px] whitespace-nowrap backdrop-blur-sm transition-colors",
-                              hovered === skill.name
-                                ? "border-lime text-lime"
-                                : "border-line bg-bg/70 text-muted",
+                              hovered === skill.name && "is-on",
                             )}
-                            style={{
-                              animation: `orbit ${
-                                groupIndex === 2 ? 80 : groupIndex === 1 ? 62 : 46
-                              }s linear infinite reverse`,
-                              borderColor:
-                                hovered === skill.name ? meta.accent : undefined,
-                            }}
+                            style={
+                              {
+                                animation: `orbit ${
+                                  groupIndex === 2 ? 80 : groupIndex === 1 ? 62 : 46
+                                }s linear infinite reverse`,
+                                "--accent": meta.accent,
+                              } as CSSProperties
+                            }
                           >
                             {skill.name}
                           </span>
@@ -221,37 +218,35 @@ export function Skills() {
                   <div
                     key={group}
                     className="skill-block"
+                    style={{ "--accent": meta.accent } as CSSProperties}
                     data-dim={activeGroup !== "all" && activeGroup !== group}
                   >
                     <p className="skill-block-label">
-                      <span
-                        className="size-1.5 shrink-0 rounded-full"
-                        style={{ background: meta.accent }}
-                      />
+                      <span className="skill-block-dot" />
                       {meta.label}
                       <span className="skill-block-count">{groupSkills.length}</span>
                     </p>
 
                     <ul className="skill-items">
-                      {groupSkills.map((skill) => (
+                      {groupSkills.map((skill, index) => (
                         <li
                           key={skill.name}
                           className="skill-item"
-                          style={{ "--accent": meta.accent } as CSSProperties}
+                          style={{ "--i": index } as CSSProperties}
                           data-active={hovered === skill.name}
                           onMouseEnter={() => setHovered(skill.name)}
                           onMouseLeave={() => setHovered(null)}
                         >
                           <span className="skill-name">{skill.name}</span>
-                          <span className="skill-meter" aria-hidden="true">
-                            {STEPS.map((step) => (
-                              <span
-                                key={step}
-                                className="skill-bar"
-                                data-on={step <= skill.level}
-                                style={{ "--i": step - 1 } as CSSProperties}
-                              />
-                            ))}
+                          <span
+                            className="skill-meter"
+                            data-level={skill.level}
+                            style={{ "--fill": skill.level / 5 } as CSSProperties}
+                            aria-hidden="true"
+                          >
+                            <span className="skill-fill">
+                              <span className="skill-sheen" />
+                            </span>
                           </span>
                           <span className="sr-only">{DEPTH[skill.level].label}</span>
                         </li>
@@ -263,8 +258,8 @@ export function Skills() {
             </div>
 
             <p className="mt-5 border-t border-line pt-4 text-[11px] text-muted">
-              Five bars per skill — rising from learning a tool to shipping with
-              it daily.
+              Each track fills to my depth — a full bar means I ship with it
+              daily, a short one means I&apos;m still learning.
             </p>
 
             <div className="mt-8 rounded-2xl border border-line bg-panel/50 p-5">
