@@ -79,6 +79,7 @@ export const skills: Skill[] = [
   // data
   { name: "PostgreSQL", group: "data", level: 5 },
   { name: "MySQL", group: "data", level: 5 },
+  { name: "Oracle SQL", group: "data", level: 4 },
   { name: "MongoDB", group: "data", level: 3 },
 
   // devops
@@ -90,7 +91,6 @@ export const skills: Skill[] = [
   // design
   { name: "Figma", group: "design", level: 5 },
   { name: "Adobe XD", group: "design", level: 4 },
-  { name: "Design", group: "design", level: 5 },
 
   // mobile
   { name: "Flutter", group: "mobile", level: 3 },

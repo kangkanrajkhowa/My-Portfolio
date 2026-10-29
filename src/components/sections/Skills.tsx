@@ -257,12 +257,12 @@ export function Skills() {
               })}
             </div>
 
-            <p className="mt-5 border-t border-line pt-4 text-[11px] text-muted">
+            <p className="mt-4 border-t border-line pt-3.5 text-[11px] text-muted">
               Each track fills to my depth — a full bar means I ship with it
               daily, a short one means I&apos;m still learning.
             </p>
 
-            <div className="mt-8 rounded-2xl border border-line bg-panel/50 p-5">
+            <div className="mt-6 rounded-2xl border border-line bg-panel/50 p-5">
               <Lottie
                 src="/lottie/wave.json"
                 className="mb-5 h-24 w-full max-w-[300px]"
