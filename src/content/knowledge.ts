@@ -152,7 +152,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "this-site",
     answer:
-      "Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. The hero is a custom Three.js shader, motion is GSAP plus Lenis, and it is statically exported and deployed by GitHub Actions on every push.",
+      "Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. The hero is a hand-written WebGL shader with no 3D library behind it, the motion is plain CSS, and the whole site is a static export published to GitHub Pages on every push to main.",
     keywords: ["this site", "website", "built", "stack", "three", "gsap", "next"],
   },
   {

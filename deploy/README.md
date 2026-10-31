@@ -5,7 +5,7 @@ web server that can serve HTML/CSS/JS can host it. There is no Node runtime, no
 database and no server-side code involved — the contact form talks to Web3Forms
 from the browser and the assistant runs from a local knowledge file.
 
-Target domain: **`kangkan.dev`** (root, no base path).
+Target domain: **`kangkan.in`** (root, no base path).
 
 ---
 
@@ -43,7 +43,7 @@ without step 4 every visitor downloads all of it uncompressed.
 
 ## 2. Point the domain at the host
 
-Add `kangkan.dev` in your host's panel first, then choose one DNS approach:
+Add `kangkan.in` in your host's panel first, then choose one DNS approach:
 
 **Option A — host's nameservers (simplest).** In your registrar's DNS settings,
 replace the nameservers with the pair your host gives you (e.g.
@@ -57,10 +57,10 @@ IP address from your host's panel:
 | --- | --- | --- | --- |
 | `A` | `@` | your host's IPv4 address | 3600 |
 | `A` | `@` | your host's second IPv4, if it lists one | 3600 |
-| `CNAME` | `www` | `kangkan.dev` | 3600 |
+| `CNAME` | `www` | `kangkan.in` | 3600 |
 
 Propagation is usually minutes, occasionally a few hours. Check with
-`nslookup kangkan.dev` before you upload anything.
+`nslookup kangkan.in` before you upload anything.
 
 ---
 
@@ -96,11 +96,11 @@ exactly one and delete the other:
 
 Add them under **Settings → Secrets and variables → Actions → Secrets**. The
 optional repository variable `SITE_URL` overrides the default
-`https://kangkan.dev`.
+`https://kangkan.in`.
 
 `FTP_SERVER_DIR` must end with a slash, e.g. `/public_html/`. For SFTP,
 `SSH_PATH` is the absolute path to the document root, e.g.
-`/home/u123456789/domains/kangkan.dev/public_html`.
+`/home/u123456789/domains/kangkan.in/public_html`.
 
 Keep `.github/workflows/ci.yml` — it still lints, type-checks, tests and runs the
 end-to-end suite on every pull request.
@@ -114,7 +114,7 @@ npm run package:static -- --server nginx
 npm run package:static -- --server iis
 ```
 
-This writes `dist/kangkan.dev-static.zip`, containing `out/` plus the matching
+This writes `dist/kangkan.in-static.zip`, containing `out/` plus the matching
 server config, ready to drop into hPanel or cPanel's File Manager → Upload →
 Extract. For nginx the config is written **next to** the zip rather than inside
 it, because a `.conf` file in a web root is downloadable.
@@ -129,19 +129,19 @@ winning the directory index.
 
 ```bash
 # Certificate and compression on the document
-curl -sI https://kangkan.dev/ | grep -Ei "http/|content-encoding|cache-control|strict-transport"
+curl -sI https://kangkan.in/ | grep -Ei "http/|content-encoding|cache-control|strict-transport"
 
 # Fingerprinted assets must be immutable and compressed
-curl -sI https://kangkan.dev/_next/static/chunks/ | head -1
+curl -sI https://kangkan.in/_next/static/chunks/ | head -1
 
 # Redirects
-curl -sI http://kangkan.dev/   | head -3   # 301 -> https://kangkan.dev/
-curl -sI https://www.kangkan.dev/ | head -3 # 301 -> https://kangkan.dev/
+curl -sI http://kangkan.in/   | head -3   # 301 -> https://kangkan.in/
+curl -sI https://www.kangkan.in/ | head -3 # 301 -> https://kangkan.in/
 
 # A real page, the 404, and the résumé
-curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.dev/work/
-curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.dev/does-not-exist/
-curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.dev/resume.pdf
+curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.in/work/
+curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.in/does-not-exist/
+curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.in/resume.pdf
 ```
 
 `content-encoding: br` (or `gzip`) on the first two is the quick proof that
@@ -151,7 +151,7 @@ compression is live. If it is missing, the host has the module disabled — enab
 Also confirm the canonical URL in the page source is the new domain:
 
 ```bash
-curl -s https://kangkan.dev/ | grep -o '<link rel="canonical"[^>]*>'
+curl -s https://kangkan.in/ | grep -o '<link rel="canonical"[^>]*>'
 ```
 
 ---

@@ -1,6 +1,6 @@
 /**
  * Bundles the static export into an upload-ready zip for hosts where you would
- * rather use the file manager than CI. Writes dist/kangkan.dev-static.zip with
+ * rather use the file manager than CI. Writes dist/kangkan.in-static.zip with
  * the matching server config already inside.
  *
  *   npm run package:static                  # Apache / LiteSpeed (.htaccess)
@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const outDir = path.join(root, "out");
 const distDir = path.join(root, "dist");
-const DOMAIN = "kangkan.dev";
+const DOMAIN = "kangkan.in";
 
 const CONFIGS = {
   apache: {

@@ -4,13 +4,13 @@ name: Deploy to shared hosting (FTP)
 # Works on Hostinger, BigRock, Namecheap and GoDaddy.
 #
 # Required repository secrets:
-#   FTP_SERVER      e.g. ftp.kangkan.dev (the hostname from your hosting panel)
+#   FTP_SERVER      e.g. ftp.kangkan.in (the hostname from your hosting panel)
 #   FTP_USERNAME    the FTP account for the site
 #   FTP_PASSWORD    that account's password
 #   FTP_SERVER_DIR  absolute target directory, WITH a trailing slash, e.g. /public_html/
 #
 # Optional repository variable:
-#   SITE_URL        defaults to https://kangkan.dev
+#   SITE_URL        defaults to https://kangkan.in
 #
 # Delete this file if you deploy over SFTP (deploy-sftp.yml) instead.
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Build (static export)
         env:
-          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://kangkan.dev' }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://kangkan.in' }}
           NEXT_PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build
