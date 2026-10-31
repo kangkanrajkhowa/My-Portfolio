@@ -7,7 +7,13 @@ import { socials } from "@/content/socials";
 import { socialIconMap } from "@/components/ui/brand-icons";
 import { toast } from "@/components/ui/toast";
 
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+// Web3Forms access keys are public by design: they ship inside the client
+// bundle of every static site that uses them, so keeping one here is no wider
+// exposure than the deployed JavaScript. NEXT_PUBLIC_WEB3FORMS_KEY (or the
+// WEB3FORMS_KEY repository secret in CI) overrides it, which is the path to use
+// if the key is ever rotated per environment.
+const FALLBACK_ACCESS_KEY = "9c77c007-529c-417b-9d34-1bd891555cc5";
+const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || FALLBACK_ACCESS_KEY;
 
 type Status = "idle" | "sending" | "success" | "error";
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
