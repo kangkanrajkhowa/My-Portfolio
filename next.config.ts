@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
-// The site is served from a domain root on shared hosting, so this defaults to
-// empty. Set BASE_PATH only to publish under a subdirectory.
+// GitHub Pages serves the custom domain (kangkan.in) from its root, so this
+// stays empty. Set BASE_PATH only to publish under a subdirectory, such as a
+// project page at /My-Portfolio.
 const basePath = process.env.BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {

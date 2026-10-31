@@ -4,7 +4,7 @@ The personal portfolio of **Kangkan Rajkhowa** — fullstack developer & UI/UX d
 
 Rebuilt from scratch: a cinematic, shader-driven single page plus static case studies, a curated on-site assistant, a live GitHub dashboard and a generated résumé PDF. Every push to `main` builds, tests and publishes it.
 
-**Live:** <https://kangkan.dev>
+**Live:** <https://kangkan.in>
 
 Lighthouse (mobile, last measured on the GitHub Pages build): **performance 95 · accessibility 100 · best practices 100 · SEO 100**, 410 KiB transferred. Re-run after the hosting cutover — see [deploy/README.md](deploy/README.md).
 
@@ -76,22 +76,34 @@ Everything you would normally change lives in `src/content/`:
 
 Commit and push; the workflow handles the rest.
 
----## Deployment
+---
+
+## Deployment
 
 The site is a static export: `npm run build` writes `out/`, and any web server can serve it. There is no Node runtime, database or server code in production.
 
-Target: **`kangkan.dev`** at a domain root on shared hosting (Hostinger, BigRock, Namecheap, GoDaddy). The complete cutover guide — which server config to upload, DNS records, SSL, verification and troubleshooting — lives in **[deploy/README.md](deploy/README.md)**.
+Target: **`kangkan.in`** on **GitHub Pages**, published from `main` by [deploy-pages.yml](.github/workflows/deploy-pages.yml). Push to `main` and the live site follows. Lint, typecheck, unit tests, the static export and the résumé PDF all run first, so a broken commit fails the deploy instead of publishing.
 
-Two deployment workflows are provided. Enable **one** and delete the other:
+### One-time GitHub setup
 
-| Workflow | Use when | Required secrets |
-| --- | --- | --- |
-| [deploy-ftp.yml](.github/workflows/deploy-ftp.yml) | Any of the four hosts | `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, `FTP_SERVER_DIR` |
-| [deploy-sftp.yml](.github/workflows/deploy-sftp.yml) | The plan includes SSH | `SSH_HOST`, `SSH_USER`, `SSH_PRIVATE_KEY`, `SSH_KNOWN_HOSTS`, `SSH_PATH` |
+1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**.
+2. **Settings → Pages → Custom domain:** enter `kangkan.in`. The same value is committed in [public/CNAME](public/CNAME), so every deploy keeps it.
+3. **Settings → Secrets and variables → Actions → secret `WEB3FORMS_KEY`** — see [Contact form](#contact-form).
+4. Optionally set the repository variable `SITE_URL` if the domain ever changes; it defaults to `https://kangkan.in`.
 
-Both build on every push to `main` — lint, typecheck, unit tests, static export, résumé PDF, server config — and then publish. Until the matching secrets exist the deploy job skips itself with a notice rather than failing red.
+### DNS at GoDaddy
 
-Set the optional repository variable `SITE_URL` only if the domain changes; it defaults to `https://kangkan.dev`.
+GoDaddy → **My Products → `kangkan.in` → DNS** → delete the parked records and add:
+
+| Type | Name | Value | TTL |
+| --- | --- | --- | --- |
+| `A` | `@` | `185.199.108.153` | 600 |
+| `A` | `@` | `185.199.109.153` | 600 |
+| `A` | `@` | `185.199.110.153` | 600 |
+| `A` | `@` | `185.199.111.153` | 600 |
+| `CNAME` | `www` | `kangkanrajkhowa.github.io` | 600 |
+
+Remove GoDaddy's default parking `A` record on `@` and its `CNAME www → kangkan.in`, or the domain keeps resolving to the parking page. Confirm with `nslookup kangkan.in 8.8.8.8`, then tick **Enforce HTTPS** in **Settings → Pages** once GitHub has issued the certificate — usually within an hour of DNS resolving. Only one host is canonical; GitHub redirects the other.
 
 ### Deploying by hand
 
@@ -102,24 +114,21 @@ npm run package:static -- --server nginx  # config written beside the zip
 npm run package:static -- --server iis
 ```
 
-`dist/kangkan.dev-static.zip` is ready for a file-manager upload. A local build still emits the production canonical URL — `SITE_URL` falls back to the real domain, never to localhost.
+`dist/kangkan.in-static.zip` is ready for a file-manager upload. A local build still emits the production canonical URL — `SITE_URL` falls back to the real domain, never to localhost.
 
-### DNS and SSL
+### Moving to shared hosting instead
 
-1. Buy `kangkan.dev`, add it in the hosting panel, and point DNS at the host (its nameservers, or an `A` record for `@` plus a `CNAME` for `www`).
-2. Enable **AutoSSL / Let's Encrypt** and wait for the certificate. `.dev` is on the HSTS preload list, so HTTPS is not optional — a missing certificate makes the domain look completely offline.
-3. Enable **Force HTTPS** in the panel, then upload the server config and files.
-4. Run the verification commands in [deploy/README.md](deploy/README.md#5-verify-the-deploy) and confirm `content-encoding: br`.
-
-GitHub Pages is retired: its workflow has been deleted, so no further builds publish there. The old `github.io` site keeps serving its last deployment until you unpublish it under **Settings → Pages**.
+The `deploy/` folder and the two FTP workflows are kept for a later move to Hostinger, BigRock, Namecheap or GoDaddy — [deploy/README.md](deploy/README.md) holds the full cutover guide, including the `.htaccess` that turns on Brotli and `immutable` caching. Those workflows skip themselves while their secrets are unset, so they never interfere with Pages. Delete them if you stay on Pages.
 
 ## Contact form
 
-The form posts to [Web3Forms](https://web3forms.com) (free, no backend).
+GitHub Pages serves static files only, so it cannot run code that sends email. The form therefore posts to [Web3Forms](https://web3forms.com) — a free form-to-inbox relay. Submissions arrive as ordinary email in the inbox the access key was created with; nobody needs an email client open.
 
-1. Create an access key for `kangkan.raj@gmail.com`.
-2. Add it as a repository secret: **Settings → Secrets → Actions → `WEB3FORMS_KEY`**.
-3. Push (or re-run the workflow).
+1. Open [web3forms.com](https://web3forms.com), enter `kangkan.raj@gmail.com`, and copy the access key it emails you.
+2. Add it as a repository secret: **Settings → Secrets and variables → Actions → `WEB3FORMS_KEY`**.
+3. Re-run the Pages workflow (or push). The key is baked into the build at compile time, so it only takes effect after a new deploy.
+
+The key is a public identifier rather than a secret — it ships in the browser bundle by design — but Web3Forms lets you restrict it to `kangkan.in`, which stops anyone reusing it on another site. It cannot send from your address; replies go to whatever the visitor types.
 
 Locally, put it in `.env.local`:
 
