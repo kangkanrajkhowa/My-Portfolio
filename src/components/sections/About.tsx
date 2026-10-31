@@ -4,7 +4,6 @@ import { projects } from "@/content/projects";
 import githubStats from "@/content/github-stats.json";
 import { CountUp } from "@/components/ui/CountUp";
 import { Reveal } from "@/components/ui/Reveal";
-import { Lottie } from "@/components/ui/Lottie";
 
 export function About() {
   return (
@@ -47,10 +46,6 @@ export function About() {
                         /2026
                       </span>
                     </div>
-                    <Lottie
-                      src="/lottie/orbit.json"
-                      className="size-28 shrink-0 sm:size-32 md:size-36"
-                    />
                   </div>
                   <div className="mt-8 grid grid-cols-2 gap-4 border-t border-line pt-5 text-xs text-muted">
                     <div>

@@ -3,7 +3,6 @@ export type SkillGroup =
   | "backend"
   | "data"
   | "devops"
-  | "design"
   | "mobile"
   | "ai";
 
@@ -37,11 +36,6 @@ export const groupMeta: Record<
     blurb: "Pipelines, Linux boxes and deploys that do not wake me up.",
     accent: "#F7A072",
   },
-  design: {
-    label: "Design",
-    blurb: "Interfaces designed before they are coded.",
-    accent: "#FF8FA3",
-  },
   mobile: {
     label: "Mobile",
     blurb: "Flutter apps that feel native on both stores.",
@@ -67,6 +61,8 @@ export const skills: Skill[] = [
   { name: "Bootstrap", group: "frontend", level: 5 },
   { name: "jQuery", group: "frontend", level: 4 },
   { name: "Styled Components", group: "frontend", level: 3 },
+  { name: "Figma", group: "frontend", level: 5 },
+  { name: "Adobe XD", group: "frontend", level: 4 },
 
   // backend
   { name: "PHP", group: "backend", level: 5 },
@@ -87,10 +83,6 @@ export const skills: Skill[] = [
   { name: "GitHub Actions", group: "devops", level: 4 },
   { name: "CI/CD", group: "devops", level: 4 },
   { name: "Linux", group: "devops", level: 4 },
-
-  // design
-  { name: "Figma", group: "design", level: 5 },
-  { name: "Adobe XD", group: "design", level: 4 },
 
   // mobile
   { name: "Flutter", group: "mobile", level: 3 },

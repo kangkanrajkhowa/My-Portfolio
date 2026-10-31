@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Command, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { profile } from "@/content/profile";
 import { scrollToSection } from "@/lib/motion";
 import { ThemeToggle } from "@/components/shell/ThemeToggle";
@@ -98,16 +98,6 @@ export function Nav() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() =>
-                window.dispatchEvent(new CustomEvent("kr-command-open"))
-              }
-              className="hidden items-center gap-2 rounded-full border border-line px-3 py-2 text-xs text-muted transition-colors hover:border-line-strong hover:text-fg sm:flex"
-              aria-label="Open command palette"
-            >
-              <Command size={13} /> K
-            </button>
             <ThemeToggle />
             <button
               type="button"
@@ -130,7 +120,6 @@ export function Nav() {
       </header>
 
       <div
-        data-lenis-prevent
         className={cn(
           "fixed inset-0 z-[75] flex flex-col overflow-y-auto overscroll-contain bg-bg px-6 py-6 transition-all duration-500 md:hidden",
           menuOpen

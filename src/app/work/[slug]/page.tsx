@@ -9,9 +9,6 @@ import {
 } from "@/content/projects";
 import { Nav } from "@/components/shell/Nav";
 import { Footer } from "@/components/shell/Footer";
-import { Cursor } from "@/components/shell/Cursor";
-import { ScrollProgress } from "@/components/shell/ScrollProgress";
-import { Spotlight } from "@/components/shell/Spotlight";
 import { Toaster } from "@/components/ui/toast";
 import { absoluteUrl } from "@/lib/site";
 
@@ -56,9 +53,6 @@ export default async function CaseStudyPage({
 
   return (
     <>
-      <Cursor />
-      <ScrollProgress />
-      <Spotlight />
       <Toaster />
       <Nav />
 

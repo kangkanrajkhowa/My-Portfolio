@@ -9,7 +9,7 @@ test.describe("home", () => {
     await expect(page).toHaveTitle(/Kangkan Rajkhowa/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Kangkan");
 
-    for (const id of ["about", "skills", "work", "experience", "stats", "ask", "contact"]) {
+    for (const id of ["about", "skills", "work", "experience", "stats", "contact"]) {
       await expect(page.locator(`#${id}`)).toHaveCount(1);
     }
 
@@ -23,23 +23,6 @@ test.describe("home", () => {
     await page.waitForTimeout(900);
     const top = await page.locator("#work").evaluate((el) => el.getBoundingClientRect().top);
     expect(Math.abs(top)).toBeLessThan(220);
-  });
-});
-
-test.describe("command palette", () => {
-  test("opens with the keyboard, finds a project and closes", async ({ page }) => {
-    await visit(page);
-    await page.keyboard.press("ControlOrMeta+k");
-    const input = page.locator("[cmdk-input]");
-    await expect(input).toBeVisible();
-
-    await input.fill("egras");
-    await expect(
-      page.getByRole("option", { name: /eGRAS Assam — Web/ }),
-    ).toBeVisible();
-
-    await page.keyboard.press("Escape");
-    await expect(input).toBeHidden();
   });
 });
 
@@ -138,19 +121,6 @@ test.describe("contact", () => {
     await page.locator("#message").fill("A short enquiry about a project.");
     await page.locator('#contact button[type="submit"]').click();
     await expect(page.getByText("A valid email so I can reply.")).toBeVisible();
-  });
-});
-
-test.describe("assistant", () => {
-  test("answers a curated question", async ({ page }) => {
-    await visit(page);
-    await page.locator("#ask").scrollIntoViewIfNeeded();
-    await page.locator("#ask-input").fill("Tell me about eGRAS");
-    await page.locator('#ask button[type="submit"]').click();
-
-    await expect(
-      page.getByText(/Government Receipt Accounting System/i).last(),
-    ).toBeVisible({ timeout: 10_000 });
   });
 });
 
