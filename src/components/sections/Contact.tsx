@@ -82,7 +82,7 @@ export function Contact() {
         body: JSON.stringify({
           access_key: ACCESS_KEY,
           subject: `Portfolio enquiry — ${form.name}`,
-          from_name: "kangkanrajkhowa portfolio",
+          from_name: "My Portfolio",
           name: form.name,
           email: form.email,
           budget: form.budget,
@@ -228,7 +228,7 @@ export function Contact() {
                       onChange={(event) => update("name")(event.target.value)}
                       aria-invalid={Boolean(errors.name)}
                       autoComplete="name"
-                      placeholder="Kangkan"
+                      placeholder="Your name"
                     />
                     {fieldError("name")}
                   </div>
@@ -246,7 +246,7 @@ export function Contact() {
                       onChange={(event) => update("email")(event.target.value)}
                       aria-invalid={Boolean(errors.email)}
                       autoComplete="email"
-                      placeholder="you@company.com"
+                      placeholder="Your email id"
                     />
                     {fieldError("email")}
                   </div>
