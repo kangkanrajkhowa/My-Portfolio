@@ -55,3 +55,6 @@ next-env.d.ts
 /.wrangler/
 /freebuff.open-next.config.ts
 /freebuff.wrangler.jsonc
+
+# Agent chat attachment cache — local scratch, never part of the site
+.cloud-attachments/
