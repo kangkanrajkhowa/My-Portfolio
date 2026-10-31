@@ -4,7 +4,7 @@ The personal portfolio of **Kangkan Rajkhowa** — fullstack developer & UI/UX d
 
 Rebuilt from scratch: a cinematic, shader-driven single page plus static case studies, a curated on-site assistant, a live GitHub dashboard and a generated résumé PDF. Every push to `main` builds, tests and publishes it.
 
-**Live:** <https://kangkan.in>
+**Live:** <https://www.kangkan.in>
 
 Lighthouse (mobile, last measured on the GitHub Pages build): **performance 95 · accessibility 100 · best practices 100 · SEO 100**, 410 KiB transferred. Re-run after the hosting cutover — see [deploy/README.md](deploy/README.md).
 
@@ -82,14 +82,14 @@ Commit and push; the workflow handles the rest.
 
 The site is a static export: `npm run build` writes `out/`, and any web server can serve it. There is no Node runtime, database or server code in production.
 
-Target: **`kangkan.in`** on **GitHub Pages**, published from `main` by [deploy-pages.yml](.github/workflows/deploy-pages.yml). Push to `main` and the live site follows. Lint, typecheck, unit tests, the static export and the résumé PDF all run first, so a broken commit fails the deploy instead of publishing.
+Target: **`www.kangkan.in`** on **GitHub Pages**, published from `main` by [deploy-pages.yml](.github/workflows/deploy-pages.yml). Push to `main` and the live site follows. Lint, typecheck, unit tests, the static export and the résumé PDF all run first, so a broken commit fails the deploy instead of publishing.
 
 ### One-time GitHub setup
 
 1. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**.
-2. **Settings → Pages → Custom domain:** enter `kangkan.in`. The same value is committed in [public/CNAME](public/CNAME), so every deploy keeps it.
+2. **Settings → Pages → Custom domain:** enter `www.kangkan.in`. The same value is committed in [public/CNAME](public/CNAME), so every deploy keeps it. GitHub Pages then redirects `kangkan.in` to `www` with a 301, which is the canonical host the build advertises.
 3. **Settings → Secrets and variables → Actions → secret `WEB3FORMS_KEY`** — see [Contact form](#contact-form).
-4. Optionally set the repository variable `SITE_URL` if the domain ever changes; it defaults to `https://kangkan.in`.
+4. Optionally set the repository variable `SITE_URL` if the domain ever changes; it defaults to `https://www.kangkan.in`.
 
 ### DNS at GoDaddy
 
@@ -128,7 +128,7 @@ GitHub Pages serves static files only, so it cannot run code that sends email. T
 2. Add it as a repository secret: **Settings → Secrets and variables → Actions → `WEB3FORMS_KEY`**.
 3. Re-run the Pages workflow (or push). The key is baked into the build at compile time, so it only takes effect after a new deploy.
 
-The key is a public identifier rather than a secret — it ships in the browser bundle by design — but Web3Forms lets you restrict it to `kangkan.in`, which stops anyone reusing it on another site. It cannot send from your address; replies go to whatever the visitor types.
+The key is a public identifier rather than a secret — it ships in the browser bundle by design — but Web3Forms lets you restrict it to `www.kangkan.in`, which stops anyone reusing it on another site. It cannot send from your address; replies go to whatever the visitor types.
 
 Locally, put it in `.env.local`:
 

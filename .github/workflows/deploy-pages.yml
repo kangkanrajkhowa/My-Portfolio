@@ -1,14 +1,14 @@
 name: Deploy to GitHub Pages
 
 # Builds the static export and publishes it to GitHub Pages on every push to
-# main, so kangkan.in is always the current commit.
+# main, so www.kangkan.in is always the current commit.
 #
 # One-time repository setup:
 #   Settings → Pages → Build and deployment → Source: GitHub Actions
 #   Settings → Secrets and variables → Actions → secret WEB3FORMS_KEY
 #
 # Optional repository variable:
-#   SITE_URL  defaults to https://kangkan.in
+#   SITE_URL  defaults to https://www.kangkan.in
 #
 # The custom domain comes from public/CNAME, which the build copies into out/.
 
@@ -56,7 +56,7 @@ jobs:
 
       - name: Build (static export)
         env:
-          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://kangkan.in' }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://www.kangkan.in' }}
           NEXT_PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build

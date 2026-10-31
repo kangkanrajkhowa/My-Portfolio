@@ -10,7 +10,7 @@ name: Deploy to shared hosting (FTP)
 #   FTP_SERVER_DIR  absolute target directory, WITH a trailing slash, e.g. /public_html/
 #
 # Optional repository variable:
-#   SITE_URL        defaults to https://kangkan.in
+#   SITE_URL        defaults to https://www.kangkan.in
 #
 # Delete this file if you deploy over SFTP (deploy-sftp.yml) instead.
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Build (static export)
         env:
-          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://kangkan.in' }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://www.kangkan.in' }}
           NEXT_PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build

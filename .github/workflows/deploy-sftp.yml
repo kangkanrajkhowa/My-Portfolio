@@ -15,7 +15,7 @@ name: Deploy to shared hosting (SFTP)
 #   SSH_PORT          defaults to 22 (shared hosts often use 65002 or 2222)
 #
 # Optional repository variable:
-#   SITE_URL          defaults to https://kangkan.in
+#   SITE_URL          defaults to https://www.kangkan.in
 #
 # Delete this file if you deploy over FTP (deploy-ftp.yml) instead.
 
@@ -80,7 +80,7 @@ jobs:
 
       - name: Build (static export)
         env:
-          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://kangkan.in' }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://www.kangkan.in' }}
           NEXT_PUBLIC_WEB3FORMS_KEY: ${{ secrets.WEB3FORMS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build
