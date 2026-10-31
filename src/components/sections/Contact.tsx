@@ -5,7 +5,6 @@ import { ArrowUpRight, Check, Mail, Phone, Send } from "lucide-react";
 import { profile } from "@/content/profile";
 import { socials } from "@/content/socials";
 import { socialIconMap } from "@/components/ui/brand-icons";
-import { Lottie } from "@/components/ui/Lottie";
 import { toast } from "@/components/ui/toast";
 
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
@@ -178,10 +177,6 @@ export function Contact() {
                   Based in {profile.location} · IST (UTC+5:30) · remote-friendly
                 </p>
               </div>
-              <Lottie
-                src="/lottie/pulse.json"
-                className="size-24 shrink-0 sm:size-28"
-              />
             </div>
           </div>
 
@@ -302,8 +297,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="btn btn-primary mt-6 w-full disabled:cursor-not-allowed disabled:opacity-60"
-                  data-cursor
+                className="btn btn-primary mt-6 w-full disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {status === "sending" ? (
                     "Sending…"

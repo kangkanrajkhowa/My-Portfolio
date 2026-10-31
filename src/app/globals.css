@@ -359,7 +359,7 @@ body {
   display: grid;
   place-items: center;
   perspective: 900px;
-  min-height: 420px;
+  min-height: 300px;
 }
 
 .orbit-ring {
@@ -422,7 +422,7 @@ body {
 .skills-index {
   display: flex;
   flex-direction: column;
-  gap: 1.05rem;
+  gap: 0.7rem;
 }
 
 .skill-block {
@@ -474,8 +474,9 @@ body {
 .skill-item {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding-block: 0.28rem;
+  gap: 0.5rem;
+  padding-block: 0.16rem;
+  margin-inline: auto;
   border-bottom: 1px solid color-mix(in oklab, var(--line) 55%, transparent);
   transition:
     background 0.28s var(--ease-out-expo),
@@ -516,8 +517,8 @@ body {
 .skill-meter {
   position: relative;
   flex: 1;
-  max-width: 124px;
-  height: 7px;
+  max-width: 110px;
+  height: 6px;
   margin-left: auto;
   overflow: hidden;
   border-radius: 999px;
@@ -605,8 +606,8 @@ body {
     font-size: 0.78rem;
   }
   .skill-meter {
-    max-width: 92px;
-    height: 7px;
+    max-width: 88px;
+    height: 6px;
   }
 }
 

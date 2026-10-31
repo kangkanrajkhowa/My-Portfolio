@@ -8,10 +8,9 @@ import {
   useState,
 } from "react";
 import { groupMeta, groups, skills, type Skill, type SkillGroup } from "@/content/skills";
-import { Lottie } from "@/components/ui/Lottie";
 import { cn } from "@/lib/utils";
 
-const RING_RADII = [104, 152, 200];
+const RING_RADII = [96, 140];
 
 /** Depth reads as a cell treatment, not a count of filled segments. */
 const DEPTH: Record<Skill["level"], { label: string; state: string }> = {
@@ -26,6 +25,8 @@ export function Skills() {
   const [activeGroup, setActiveGroup] = useState<SkillGroup | "all">("all");
   const [hovered, setHovered] = useState<string | null>(null);
   const indexRef = useRef<HTMLDivElement>(null);
+
+  // Design lives inside Frontend now, so never render its own orbit ring.
 
   // Bars rise once, group by group, as each block scrolls in. Marked on the
   // DOM node rather than in state so the cascade never re-triggers on filter.
@@ -68,8 +69,8 @@ export function Skills() {
   const orbitGroups = activeGroup === "all" ? groups : [activeGroup];
 
   return (
-    <section id="skills" className="section border-y border-line bg-bg-elev/40">
-      <div className="shell">
+      <section id="skills" className="section border-y border-line bg-bg-elev/40" style={{ paddingBlock: "clamp(3rem, 6vw, 6rem)" }}>
+        <div className="shell">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow">02 — Toolkit</p>
@@ -143,7 +144,7 @@ export function Skills() {
                 const meta = groupMeta[group];
                 const groupSkills = skills.filter((skill) => skill.group === group);
                 const radius = RING_RADII[groupIndex % RING_RADII.length];
-                const offset = (groupIndex * 137) % 360;
+                const offset = (groupIndex * 120) % 360;
 
                 return (
                   <div
@@ -151,7 +152,6 @@ export function Skills() {
                     className={cn(
                       "orbit-spin",
                       groupIndex % 2 === 1 && "reverse",
-                      groupIndex === 2 && "slow",
                     )}
                     aria-hidden="true"
                   >
@@ -193,6 +193,12 @@ export function Skills() {
             <p className="mt-4 text-center text-[11px] text-muted">
               Hover a chip to highlight · rings regroup when you filter
             </p>
+
+            <style jsx>{`
+              .orbit-stage {
+                min-height: 300px;
+              }
+            `}</style>
           </div>
 
           <div>
@@ -255,28 +261,10 @@ export function Skills() {
                   </div>
                 );
               })}
-            </div>
-
-            <p className="mt-4 border-t border-line pt-3.5 text-[11px] text-muted">
+            </div>            <p className="mt-4 border-t border-line pt-3.5 text-[11px] text-muted">
               Each track fills to my depth — a full bar means I ship with it
               daily, a short one means I&apos;m still learning.
             </p>
-
-            <div className="mt-6 rounded-2xl border border-line bg-panel/50 p-5">
-              <Lottie
-                src="/lottie/wave.json"
-                className="mb-5 h-24 w-full max-w-[300px]"
-              />
-              <p className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-muted">
-                <span className="size-1.5 rounded-full bg-lime" />
-                AI &amp; ML — actively learning
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
-                I&apos;m learning LLM APIs, different model providers, retrieval
-                and agentic workflows by building small experiments — seeing
-                what genuinely helps ship better software.
-              </p>
-            </div>
           </div>
         </div>
       </div>
