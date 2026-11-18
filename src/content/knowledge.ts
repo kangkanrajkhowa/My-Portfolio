@@ -45,7 +45,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "stack",
     answer:
-      "Frontend: HTML, CSS, JavaScript, TypeScript, React, Tailwind CSS, Sass and Bootstrap. Backend: PHP, Laravel, CodeIgniter, Node.js and REST APIs. Data: PostgreSQL, MySQL and MongoDB. Plus Git, GitHub Actions and Figma. This site itself runs on Next.js, React and Three.js.",
+      "Frontend: HTML, CSS, JavaScript, TypeScript, React, Tailwind CSS, Sass and Bootstrap. Backend: PHP, Laravel, CodeIgniter, Node.js and REST APIs. Data: PostgreSQL, MySQL, Oracle SQL and MongoDB. Mobile: Flutter and Dart. Plus Git, GitHub Actions, Linux and Figma. This site itself runs on Next.js, React and Tailwind CSS.",
     keywords: ["stack", "tech", "technology", "tools", "languages", "frameworks", "skills"],
     followUps: ["What AI skills does he have?"],
   },
@@ -85,7 +85,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "react",
     answer:
-      "React and TypeScript for interactive interfaces, with Tailwind CSS for styling. This portfolio is built on Next.js 16 with React 19, Three.js for the hero and GSAP for the scroll choreography.",
+      "React and TypeScript for interactive interfaces, with Tailwind CSS for styling. This portfolio is built on Next.js 16 with React 19, a hand-written WebGL shader in the hero and CSS-driven motion.",
     keywords: ["react", "next", "nextjs", "frontend", "typescript", "tailwind"],
   },
   {
@@ -97,9 +97,9 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "projects",
     answer:
-      "Seven selected projects: City Center Store Directory, Personal Management System, Custom Hover Effects, eGRAS Assam Web and Mobile, Atmanirbhar Assam and ICAI Guwahati. Each has a case study on this site.",
+      "Eight selected projects, each with a case study on this site: City Center Store Directory, Personal Management System, Custom Hover Effects, eGRAS Assam Web, eGRAS Assam Mobile, Atmanirbhar Assam, ICAI Guwahati and Sheujhut.",
     keywords: ["projects", "portfolio", "work", "case", "study", "built"],
-    followUps: ["Tell me about eGRAS", "What is City Center Store Directory?"],
+    followUps: ["Tell me about eGRAS", "What is Sheujhut?"],
   },
   {
     id: "city-center",
@@ -124,6 +124,12 @@ export const knowledge: KnowledgeEntry[] = [
     answer:
       "ICAI Guwahati is the branch website for the Institute of Chartered Accountants of India — announcements, events and member resources, built in PHP with Bootstrap and DataTables.",
     keywords: ["icai", "chartered", "accountant", "guwahati"],
+  },
+  {
+    id: "sheujhut",
+    answer:
+      "Sheujhut is a B2B agricultural marketplace connecting sellers and buyers across Assam, with an organic-farming focus. Built in Core PHP and MySQL with REST endpoints, then packaged with Apache Cordova so the same catalogue runs on low-end Android phones — 500+ sellers and buyers across 20+ districts.",
+    keywords: ["sheujhut", "agriculture", "marketplace", "organic", "farmer", "cordova"],
   },
   {
     id: "nic",
@@ -170,7 +176,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "languages",
     answer:
-      "English and Assamese, with Hindi for everyday conversation. Documentation and code comments are always in English.",
+      "English (professional), Assamese (native) and Hindi (fluent). Documentation and code comments are always in English.",
     keywords: ["language", "english", "assamese", "hindi", "speak"],
   },
   {
