@@ -37,7 +37,7 @@ export function Answers() {
               <h3 className="text-[11px] uppercase tracking-[0.16em] text-muted">
                 {group.title}
               </h3>
-              <dl className="mt-4 border-t border-line">
+              <div className="mt-4 border-t border-line">
                 {group.items.map((item) => {
                   const answer = answerFor(item.entryId);
                   if (!answer) return null;
@@ -52,13 +52,13 @@ export function Answers() {
                           className="faq-marker mt-0.5 shrink-0 text-muted"
                         />
                       </summary>
-                      <dd className="mt-3 text-sm leading-relaxed text-muted">
+                      <p className="mt-3 text-sm leading-relaxed text-muted">
                         {answer}
-                      </dd>
+                      </p>
                     </details>
                   );
                 })}
-              </dl>
+              </div>
             </div>
           ))}
         </div>
