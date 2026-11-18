@@ -10,7 +10,8 @@ import {
 import { Nav } from "@/components/shell/Nav";
 import { Footer } from "@/components/shell/Footer";
 import { Toaster } from "@/components/ui/toast";
-import { absoluteUrl } from "@/lib/site";
+import { profile } from "@/content/profile";
+import { SITE_NAME, absoluteUrl, asset } from "@/lib/site";
 
 type Params = { slug: string };
 
@@ -30,12 +31,22 @@ export async function generateMetadata({
   return {
     title: project.title,
     description: project.summary,
+    keywords: [...project.stack, project.category, "case study"],
     alternates: { canonical: absoluteUrl(`/work/${project.slug}/`) },
     openGraph: {
-      title: project.title,
+      title: `${project.title} — ${SITE_NAME}`,
       description: project.summary,
       type: "article",
       url: absoluteUrl(`/work/${project.slug}/`),
+      images: [
+        { url: asset("/og.png"), width: 1200, height: 630, alt: project.title },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} — ${SITE_NAME}`,
+      description: project.summary,
+      images: [asset("/og.png")],
     },
   };
 }
@@ -50,6 +61,50 @@ export default async function CaseStudyPage({
   if (!project) notFound();
 
   const { prev, next } = getAdjacentProjects(slug);
+  const pageUrl = absoluteUrl(`/work/${project.slug}/`);
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        name: project.title,
+        description: project.summary,
+        url: pageUrl,
+        keywords: project.stack.join(", "),
+        genre: project.category,
+        abstract: project.problem,
+        author: {
+          "@type": "Person",
+          name: profile.name,
+          url: absoluteUrl("/"),
+        },
+        creator: { "@type": "Person", name: profile.name },
+        isPartOf: {
+          "@type": "WebSite",
+          name: SITE_NAME,
+          url: absoluteUrl("/"),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: absoluteUrl("/"),
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: project.title,
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
+  };
 
   return (
     <>
@@ -228,6 +283,12 @@ export default async function CaseStudyPage({
       <div className="mt-20">
         <Footer />
       </div>
+
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
     </>
   );
 }

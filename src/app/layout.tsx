@@ -36,6 +36,14 @@ const bengali = Noto_Serif_Bengali({
   preload: false,
 });
 
+/**
+ * Search Console / Bing verification tokens are public strings, so they ride in
+ * as build-time env vars from the Pages workflow rather than being committed.
+ * When unset, no meta tag is emitted at all.
+ */
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -46,14 +54,21 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: "https://github.com/kangkanrajkhowa" }],
   creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "technology",
   keywords: [
     "Kangkan Rajkhowa",
     "fullstack developer",
+    "full stack developer Guwahati",
     "product engineer",
     "Guwahati",
     "Assam",
     "Laravel developer",
+    "PHP developer Assam",
     "React developer",
+    "PostgreSQL developer",
+    "e-governance developer",
+    "payment gateway integration",
     "AI developer",
     "portfolio",
   ],
@@ -81,7 +96,25 @@ export const metadata: Metadata = {
     images: [asset("/og.png")],
     creator: "@kangkanrajkhowa",
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  ...(googleVerification || bingVerification
+    ? {
+        verification: {
+          ...(googleVerification ? { google: googleVerification } : {}),
+          ...(bingVerification ? { other: { "msvalidate.01": bingVerification } } : {}),
+        },
+      }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -98,41 +131,85 @@ const themeScript = `(function(){try{var stored=localStorage.getItem('kr-theme')
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const person = {
+  const origin = absoluteUrl("/");
+  const personId = `${origin}#person`;
+  const websiteId = `${origin}#website`;
+
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: profile.name,
-    jobTitle: "Fullstack Developer & Product Engineer",
-    description: SITE_DESCRIPTION,
-    url: absoluteUrl("/"),
-    email: `mailto:${profile.email}`,
-    telephone: profile.phone,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Guwahati",
-      addressRegion: "Assam",
-      addressCountry: "IN",
-    },
-    worksFor: {
-      "@type": "Organization",
-      name: profile.organisation,
-    },
-    knowsAbout: [
-      "Laravel",
-      "PHP",
-      "React",
-      "TypeScript",
-      "PostgreSQL",
-      "Design",
-      "Large Language Models",
-      "Retrieval Augmented Generation",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: profile.name,
+        givenName: profile.firstName,
+        familyName: profile.lastName,
+        jobTitle: "Full-Stack Developer",
+        description: SITE_DESCRIPTION,
+        url: origin,
+        image: absoluteUrl("/og.png"),
+        email: `mailto:${profile.email}`,
+        telephone: profile.phone,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Guwahati",
+          addressRegion: "Assam",
+          postalCode: "781003",
+          addressCountry: "IN",
+        },
+        worksFor: {
+          "@type": "Organization",
+          name: profile.organisation,
+          url: "https://www.nic.in/",
+        },
+        alumniOf: [
+          { "@type": "CollegeOrUniversity", name: "Cotton University" },
+          { "@type": "CollegeOrUniversity", name: "Gauhati University" },
+        ],
+        knowsAbout: [
+          "Laravel",
+          "PHP",
+          "CodeIgniter",
+          "React",
+          "TypeScript",
+          "PostgreSQL",
+          "Oracle Database",
+          "REST APIs",
+          "Payment systems",
+          "E-governance",
+          "Flutter",
+          "Design",
+          "Large Language Models",
+          "Retrieval Augmented Generation",
+        ],
+        knowsLanguage: ["English", "Assamese", "Hindi"],
+        sameAs: socials.map((social) => social.href),
+      },
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+        url: origin,
+        name: SITE_NAME,
+        description: SITE_DESCRIPTION,
+        inLanguage: "en-IN",
+        publisher: { "@id": personId },
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": `${origin}#profile`,
+        url: origin,
+        name: SITE_TITLE,
+        isPartOf: { "@id": websiteId },
+        about: { "@id": personId },
+        mainEntity: { "@id": personId },
+        inLanguage: "en-IN",
+      },
     ],
-    sameAs: socials.map((social) => social.href),
   };
 
   return (
     <html
-      lang="en"
+      lang="en-IN"
       data-theme="dark"
       suppressHydrationWarning
       className={`${geist.variable} ${instrument.variable} ${bengali.variable}`}
@@ -150,7 +227,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </body>
     </html>

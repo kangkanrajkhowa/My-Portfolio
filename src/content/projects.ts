@@ -153,6 +153,31 @@ export const projects: Project[] = [
     accent: "#FFD166",
     gradient: "linear-gradient(135deg, #141004 0%, #33280c 50%, #0a0803 100%)",
   },
+  {
+    slug: "sheujhut",
+    index: "08",
+    title: "Sheujhut",
+    category: "Product",
+    summary:
+      "A B2B agricultural marketplace connecting sellers and buyers across Assam, with an eco-friendly and organic-farming focus from the first screen.",
+    problem:
+      "Small growers and traders in rural districts had no shared catalogue, so produce moved through phone calls and middlemen with no visibility on price or availability.",
+    approach:
+      "Built a Core PHP and MySQL marketplace with seller and buyer accounts, category browsing and REST endpoints — then wrapped it with Apache Cordova so the same catalogue worked on low-end Android phones.",
+    outcome:
+      "500+ sellers and buyers across 20+ districts trade through one platform, with rural reach up 40% and roughly ₹2 lakh in monthly transactions flowing through it.",
+    stack: [
+      "PHP",
+      "MySQL",
+      "Bootstrap",
+      "jQuery",
+      "REST APIs",
+      "Apache Cordova",
+    ],
+    links: [],
+    accent: "#7BE0AD",
+    gradient: "linear-gradient(135deg, #06120c 0%, #123322 50%, #050b07 100%)",
+  },
 ];
 
 export const featuredProjects = projects;

@@ -14,8 +14,9 @@ export function Experience() {
               actually <span className="serif text-lime">happens</span>.
             </h2>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
-              Government platforms by day, client products by night. Different
-              stakes, same standard: it has to keep working after I hand it over.
+              Six years of government-scale payments work, before that client
+              sites and e-commerce. Different stakes, same standard: it has to
+              keep working after I hand it over.
             </p>
           </div>
 

@@ -8,46 +8,39 @@ export type ExperienceItem = {
   accent: string;
 };
 
+/**
+ * Mirrors the CV: only real, dated employment. The freelance and open-source
+ * work lives on in the projects and about sections rather than being presented
+ * as a job.
+ */
 export const experience: ExperienceItem[] = [
   {
-    role: "Senior Developer",
+    role: "Software Developer",
     org: "National Informatics Centre (NIC)",
-    period: "Present",
+    period: "Jun 2020 — Present",
     location: "Guwahati, Assam",
     summary:
-      "Building and maintaining public-sector platforms used across Assam — payment systems, scheme portals and internal MIS dashboards.",
+      "Building secure e-governance and payment platforms for the Finance Department of the Government of Assam — tax collection, scheme portals and internal MIS used by 100,000+ people.",
     bullets: [
-      "Develop and maintain large Laravel and CodeIgniter applications backed by PostgreSQL.",
-      "Ship reporting dashboards with Chart.js used by departmental officers and banks.",
-      "Work directly with government stakeholders to turn policy requirements into working software.",
+      "Improved government service delivery by 40% by architecting and delivering scalable e-governance platforms, including Assam GRAS and Atmanirbhar Assam.",
+      "Led Assam GRAS from legacy Core PHP and Oracle DB to Laravel and PostgreSQL — 30% faster transaction processing, 99.5% uptime, 100+ tax types.",
+      "Designed and prototyped the cross-platform Assam GRAS app in Flutter, Dart and BLoC for 50,000+ mobile users, with real-time payment tracking and multi-method payments.",
+      "Raised accessibility and operational efficiency by 25% across Laravel, Core PHP, PostgreSQL, REST APIs and Flutter, reaching 95% user satisfaction.",
     ],
     accent: "#C6F24E",
   },
   {
-    role: "Freelance Developer & Designer",
-    org: "Independent",
-    period: "Evenings & weekends",
-    location: "Remote",
+    role: "Web Developer",
+    org: "Trans Technologies Solution Pvt. Ltd.",
+    period: "Jul 2018 — Jun 2020",
+    location: "Guwahati, Assam",
     summary:
-      "End-to-end delivery for small businesses and institutions: design in Figma, build in Laravel or React, deploy and hand over.",
+      "Client websites and e-commerce platforms across six industries — the years where responsive layout, page weight and handover discipline became habit.",
     bullets: [
-      "Design and build marketing sites, directories and admin panels for local clients.",
-      "Handle everything from wireframes to DNS, hosting and post-launch support.",
-      "Keep the stack boring on purpose so clients can maintain it after handover.",
+      "Designed and deployed 10+ business websites and e-commerce platforms in Core PHP, CodeIgniter and JavaScript, serving 5,000+ daily visitors with 95% client retention.",
+      "Cut page load times by 40% and bugs by 15% through responsive Bootstrap layouts, iterative code review and JavaScript coding standards.",
+      "Delivered 10+ projects on time with zero critical production bugs, using Git across the team and documented handovers for every client.",
     ],
     accent: "#7C5CFF",
-  },
-  {
-    role: "Open Source Contributor",
-    org: "GitHub",
-    period: "Ongoing",
-    location: "The internet",
-    summary:
-      "Publishing small tools, design utilities and experiments — plus reading far more source code than I write.",
-    bullets: [
-      "Maintain CSS and UI utility projects used by other developers.",
-      "Explore AI-assisted workflows and document what actually helps.",
-    ],
-    accent: "#4CC9F0",
   },
 ];

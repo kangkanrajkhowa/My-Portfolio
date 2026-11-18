@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { profile } from "@/content/profile";
 import { scrollToSection } from "@/lib/motion";
 import { ThemeToggle } from "@/components/shell/ThemeToggle";
+import { BackToTop } from "@/components/shell/BackToTop";
 import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 
@@ -175,6 +176,8 @@ export function Nav() {
           </a>
         </div>
       </div>
+
+      <BackToTop />
     </>
   );
 }

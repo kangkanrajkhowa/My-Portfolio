@@ -5,9 +5,13 @@ export const profile = {
   greeting: "নমস্কাৰ",
   signoff: "ধন্যবাদ",
   roles: ["Fullstack Developer", "Product Engineer", "Problem Solver"],
+  headline: "Full-Stack Developer",
+  summary:
+    "Full-Stack Developer with 5+ years building secure e-governance and payment processing systems for 100,000+ users. Deep in PHP, Laravel, Oracle and PostgreSQL, with a record of modernising legacy platforms, cutting transaction time by 30% and shipping encrypted integrations with 10+ banking partners.",
   tagline:
     "Helping people make the world a better place through quality software.",
   location: "Guwahati, Assam, India",
+  locationLine: "Guwahati, Assam 781003",
   timezone: "Asia/Kolkata",
   email: "kangkan.raj@gmail.com",
   phone: "+91 87230 02321",
@@ -16,7 +20,7 @@ export const profile = {
   organisation: "National Informatics Centre (NIC)",
   bio: [
     "I’m an Indian fullstack developer with a passion for solving problems through simple, interactive software.",
-    "During the day I work as a senior developer at NIC. In the evening I take on freelance projects and build things that live on the internet — government platforms, store finders, internal tools and the occasional experiment.",
+    "During the day I work as a software developer at NIC, building the platforms Assam actually runs on — tax collection through GRAS, scheme tracking for the Finance Department and internal MIS dashboards used by 100,000+ people. In the evening I take on freelance products: store finders, institute sites, internal tools and the occasional experiment.",
     "I’m an open-source enthusiast. This site has no ads, no affiliate links, no tracking, no analytics and no paywall. My only motivation is to share what I’ve learned with the world.",
   ],
   principles: [
