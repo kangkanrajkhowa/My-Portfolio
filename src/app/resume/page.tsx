@@ -5,7 +5,7 @@ import { profile } from "@/content/profile";
 import { experience } from "@/content/experience";
 import { groupMeta, groups, skills } from "@/content/skills";
 import { getProject } from "@/content/projects";
-import { absoluteUrl, asset } from "@/lib/site";
+import { SITE_URL, absoluteUrl, asset } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Resume",
@@ -84,11 +84,8 @@ export default function ResumePage() {
                 </p>
               ))}
               <p className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5 sm:justify-end">
-                <a
-                  href="https://kangkanrajkhowa.netlify.app"
-                  className="hover:text-neutral-900"
-                >
-                  kangkanrajkhowa.netlify.app
+                <a href={SITE_URL} className="hover:text-neutral-900">
+                  {SITE_URL.replace(/^https?:\/\//, "")}
                 </a>
                 <a
                   href="https://www.linkedin.com/in/kangkanrajkhowa/"
