@@ -15,6 +15,7 @@ const links = [
   { id: "skills", label: "Skills" },
   { id: "work", label: "Work" },
   { id: "experience", label: "Experience" },
+  { id: "faq", label: "Answers" },
   { id: "contact", label: "Contact" },
 ];
 

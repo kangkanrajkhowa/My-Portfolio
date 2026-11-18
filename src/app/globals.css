@@ -720,3 +720,14 @@ body {
     transform: none;
   }
 }
+
+/* ---------------------------------------------------------------- answers */
+
+/* Native <details> disclosure: the plus becomes a close mark while open. */
+.faq-marker {
+  transition: rotate 200ms ease;
+}
+
+details[open] > summary .faq-marker {
+  rotate: 45deg;
+}

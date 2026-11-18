@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { projects, getProject, getAdjacentProjects } from "@/content/projects";
 import { groups, groupMeta, skills } from "@/content/skills";
 import { knowledge } from "@/content/knowledge";
+import { faqGroups } from "@/content/faq";
 import { experience } from "@/content/experience";
 import { profile } from "@/content/profile";
 import { socials } from "@/content/socials";
@@ -67,6 +68,28 @@ describe("knowledge base", () => {
       expect(entry.answer.length).toBeGreaterThan(30);
       expect(entry.keywords.length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe("answers section", () => {
+  it("resolves every published question to a knowledge answer", () => {
+    const ids = new Set(knowledge.map((entry) => entry.id));
+    expect(faqGroups.length).toBeGreaterThan(0);
+
+    for (const group of faqGroups) {
+      expect(group.items.length).toBeGreaterThan(0);
+      for (const item of group.items) {
+        expect(item.question.trim().endsWith("?")).toBe(true);
+        expect(ids.has(item.entryId)).toBe(true);
+      }
+    }
+  });
+
+  it("does not publish the same question twice", () => {
+    const questions = faqGroups.flatMap((group) =>
+      group.items.map((item) => item.question),
+    );
+    expect(new Set(questions).size).toBe(questions.length);
   });
 });
 
