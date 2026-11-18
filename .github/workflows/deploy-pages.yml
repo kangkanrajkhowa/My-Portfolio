@@ -54,6 +54,13 @@ jobs:
       - name: Unit tests
         run: npm run test
 
+      # The social preview is rendered from scripts/make-og.mjs, so a title or
+      # positioning change reaches LinkedIn, X and WhatsApp without anyone
+      # remembering to run `npm run og` by hand. It writes public/og.png, which
+      # the build below copies into out/.
+      - name: Social preview card
+        run: npm run og
+
       - name: Build (static export)
         env:
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://www.kangkan.in' }}

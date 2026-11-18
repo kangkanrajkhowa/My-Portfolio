@@ -85,7 +85,7 @@ export const metadata: Metadata = {
         url: asset("/og.png"),
         width: 1200,
         height: 630,
-        alt: "Kangkan Rajkhowa — Fullstack Developer & Product Engineer",
+        alt: "Kangkan Rajkhowa — Senior Software Developer",
       },
     ],
   },

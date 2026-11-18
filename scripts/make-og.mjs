@@ -46,13 +46,13 @@ const html = `<!doctype html>
       <span>Portfolio 2026</span>
     </div>
 
-    <h1>Fullstack developer<br />&amp; <em>UI/UX designer</em>.</h1>
+    <h1>Senior software<br /><em>developer</em>.</h1>
 
     <div class="bottom">
-      <p>Kangkan Rajkhowa — Laravel, React, PostgreSQL and practical AI. Building public-sector platforms and products that last.</p>
+      <p>Kangkan Rajkhowa — Laravel, React, PostgreSQL and practical AI. Building payment and e-governance platforms for Assam.</p>
       <div class="badges">
-        <span class="badge hot">Senior dev @ NIC</span>
-        <span class="badge">AI &amp; ML</span>
+        <span class="badge hot">E-Governance &amp; Payments</span>
+        <span class="badge">@ NIC, Assam</span>
       </div>
     </div>
   </body>
