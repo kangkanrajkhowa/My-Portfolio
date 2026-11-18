@@ -174,18 +174,6 @@ export const knowledge: KnowledgeEntry[] = [
     keywords: ["language", "english", "assamese", "hindi", "speak"],
   },
   {
-    id: "education",
-    answer:
-      "Formal education details are not listed on this site — the work and the certifications (including a Flutter development certification) speak for themselves. Ask directly for a full CV.",
-    keywords: ["education", "college", "degree", "study", "university", "school"],
-  },
-  {
-    id: "certifications",
-    answer:
-      "Certified in Flutter application development through codedamn, and continuously learning React Native and Firebase.",
-    keywords: ["certification", "certificate", "course", "flutter", "learning"],
-  },
-  {
     id: "flutter",
     answer:
       "Flutter and Dart for cross-platform mobile work — the eGRAS mobile companion is the largest example.",

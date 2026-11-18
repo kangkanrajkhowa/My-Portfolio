@@ -162,10 +162,6 @@ export default function RootLayout({
           name: profile.organisation,
           url: "https://www.nic.in/",
         },
-        alumniOf: [
-          { "@type": "CollegeOrUniversity", name: "Cotton University" },
-          { "@type": "CollegeOrUniversity", name: "Gauhati University" },
-        ],
         knowsAbout: [
           "Laravel",
           "PHP",

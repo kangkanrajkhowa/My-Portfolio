@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowLeft, Download } from "lucide-react";
 import { profile } from "@/content/profile";
 import { experience } from "@/content/experience";
-import { education } from "@/content/education";
 import { groupMeta, groups, skills } from "@/content/skills";
 import { getProject } from "@/content/projects";
 import { absoluteUrl, asset } from "@/lib/site";
@@ -158,27 +157,6 @@ export default function ResumePage() {
                 </p>
                 <p className="mt-1 text-[10px] text-neutral-500">
                   {project.stack.join(" · ")}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-7">
-          <h2 className="text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
-            Education
-          </h2>
-          <div className="mt-3 space-y-2.5">
-            {education.map((item) => (
-              <div key={item.degree}>
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="text-[12px] font-semibold">{item.degree}</h3>
-                  <span className="text-[11px] text-neutral-500">
-                    {item.period}
-                  </span>
-                </div>
-                <p className="text-[11px] text-neutral-600">
-                  {item.org} · {item.location}
                 </p>
               </div>
             ))}
