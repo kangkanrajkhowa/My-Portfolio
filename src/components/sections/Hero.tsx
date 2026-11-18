@@ -101,7 +101,7 @@ export function Hero() {
       <div className="shell relative z-10 pb-10 pt-32 md:pt-40">
         <div className="flex items-start justify-between">
           <p className="eyebrow">
-            {profile.location} · <span className="tabular">{clock || "—"}</span> IST
+            {profile.location} · <span className="tabular">{clock || "-"}</span> IST
           </p>
           <span className="hidden items-center gap-2 rounded-full border border-line px-3 py-1.5 text-[11px] text-muted md:inline-flex">
             <span className="accent-dot" />

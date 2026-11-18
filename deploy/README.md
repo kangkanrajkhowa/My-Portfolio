@@ -2,7 +2,7 @@
 
 The site is a static export: `npm run build` writes everything to `out/`, and any
 web server that can serve HTML/CSS/JS can host it. There is no Node runtime, no
-database and no server-side code involved — the contact form talks to Web3Forms
+database and no server-side code involved - the contact form talks to Web3Forms
 from the browser and the assistant runs from a local knowledge file.
 
 Target domain: **`kangkan.in`** (root, no base path).
@@ -21,7 +21,7 @@ Target domain: **`kangkan.in`** (root, no base path).
 | VPS / Cloudways / any nginx | [`nginx/portfolio.conf`](nginx/portfolio.conf) | `/etc/nginx/sites-available/` |
 
 LiteSpeed reads `.htaccess` directives, so Hostinger needs no separate file. The
-file is named `.htaccess` **with the leading dot** — FTP clients hide dotfiles by
+file is named `.htaccess` **with the leading dot** - FTP clients hide dotfiles by
 default, so check your client's "show hidden files" setting before concluding it
 did not upload.
 
@@ -45,12 +45,12 @@ without step 4 every visitor downloads all of it uncompressed.
 
 Add `kangkan.in` in your host's panel first, then choose one DNS approach:
 
-**Option A — host's nameservers (simplest).** In your registrar's DNS settings,
+**Option A - host's nameservers (simplest).** In your registrar's DNS settings,
 replace the nameservers with the pair your host gives you (e.g.
 `ns1.dns-parking.com` / `ns2.dns-parking.com` on Hostinger). The host then
 manages every record, including the ones AutoSSL needs.
 
-**Option B — keep the registrar's DNS.** Create these records instead, using the
+**Option B - keep the registrar's DNS.** Create these records instead, using the
 IP address from your host's panel:
 
 | Type | Name | Value | TTL |
@@ -67,14 +67,14 @@ Propagation is usually minutes, occasionally a few hours. Check with
 ## 3. Turn on SSL before the first visit
 
 `.dev` is on the HSTS preload list, so browsers refuse to load the site over
-plain HTTP — a missing certificate means the domain appears completely dead
+plain HTTP - a missing certificate means the domain appears completely dead
 rather than showing a warning.
 
 Enable **AutoSSL / Let's Encrypt** in the hosting panel and wait for it to issue
 (the panel shows the certificate state). There is no chicken-and-egg problem:
 Let's Encrypt validates over HTTP server-to-server, which still works even though
 browsers will not speak plain HTTP to a `.dev` domain. Enable **Force HTTPS** in
-the panel too — the config files enforce it, but the panel setting covers the
+the panel too - the config files enforce it, but the panel setting covers the
 window before `.htaccess` is uploaded.
 
 ---
@@ -86,10 +86,10 @@ window before `.htaccess` is uploaded.
 Two workflows build on every push to `main` that touches the site. Enable
 exactly one and delete the other:
 
-- [`deploy-ftp.yml`](../.github/workflows/deploy-ftp.yml) — works on every host
+- [`deploy-ftp.yml`](../.github/workflows/deploy-ftp.yml) - works on every host
   in the table above. Required secrets: `FTP_SERVER`, `FTP_USERNAME`,
   `FTP_PASSWORD`, `FTP_SERVER_DIR`.
-- [`deploy-sftp.yml`](../.github/workflows/deploy-sftp.yml) — faster, and
+- [`deploy-sftp.yml`](../.github/workflows/deploy-sftp.yml) - faster, and
   removes files that no longer exist. Needs SSH, which Hostinger includes on
   Business plans and above. Required secrets: `SSH_HOST`, `SSH_USER`,
   `SSH_PRIVATE_KEY`, `SSH_KNOWN_HOSTS`, `SSH_PATH`.
@@ -102,7 +102,7 @@ optional repository variable `SITE_URL` overrides the default
 `SSH_PATH` is the absolute path to the document root, e.g.
 `/home/u123456789/domains/kangkan.in/public_html`.
 
-Keep `.github/workflows/ci.yml` — it still lints, type-checks, tests and runs the
+Keep `.github/workflows/ci.yml` - it still lints, type-checks, tests and runs the
 end-to-end suite on every pull request.
 
 ### Manual (no CI)
@@ -120,7 +120,7 @@ Extract. For nginx the config is written **next to** the zip rather than inside
 it, because a `.conf` file in a web root is downloadable.
 
 If you are uploading by hand, delete the host's default `default.php`,
-`index.html` placeholder or `public_html/index.php` first — otherwise it keeps
+`index.html` placeholder or `public_html/index.php` first - otherwise it keeps
 winning the directory index.
 
 ---
@@ -138,14 +138,14 @@ curl -sI https://kangkan.in/_next/static/chunks/ | head -1
 curl -sI http://kangkan.in/   | head -3   # 301 -> https://kangkan.in/
 curl -sI https://www.kangkan.in/ | head -3 # 301 -> https://kangkan.in/
 
-# A real page, the 404, and the résumé
+# A real page, the 404, and the resume
 curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.in/work/
 curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.in/does-not-exist/
 curl -s -o /dev/null -w "%{http_code}\n" https://kangkan.in/resume.pdf
 ```
 
 `content-encoding: br` (or `gzip`) on the first two is the quick proof that
-compression is live. If it is missing, the host has the module disabled — enable
+compression is live. If it is missing, the host has the module disabled - enable
 "Compress static content" in the panel, or in cPanel use **Optimize Website**.
 
 Also confirm the canonical URL in the page source is the new domain:

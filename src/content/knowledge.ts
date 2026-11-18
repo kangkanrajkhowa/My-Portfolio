@@ -7,7 +7,7 @@ export type KnowledgeEntry = {
 
 /**
  * Hand-written knowledge base for the on-site assistant.
- * Everything here is curated, not generated — answers are deterministic.
+ * Everything here is curated, not generated - answers are deterministic.
  */
 export const knowledge: KnowledgeEntry[] = [
   {
@@ -26,7 +26,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "location",
     answer:
-      "Guwahati, Assam, India — IST (UTC+5:30). He works remotely with clients and teams anywhere.",
+      "Guwahati, Assam, India - IST (UTC+5:30). He works remotely with clients and teams anywhere.",
     keywords: ["where", "location", "based", "city", "guwahati", "assam", "timezone", "remote"],
   },
   {
@@ -39,7 +39,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "contact",
     answer:
-      "Use the contact section on this page, or email kangkan.raj@gmail.com. He is also on LinkedIn, GitHub and X — all linked in the footer.",
+      "Use the contact section on this page, or email kangkan.raj@gmail.com. He is also on LinkedIn, GitHub and X - all linked in the footer.",
     keywords: ["contact", "email", "reach", "message", "phone", "call", "linkedin"],
   },
   {
@@ -73,13 +73,13 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "ai-workflow",
     answer:
-      "Daily: an AI coding assistant for scaffolding and refactors, LLM APIs inside products where they genuinely help, and retrieval over a project’s own documentation. He is deliberately conservative — AI where it saves time, humans where correctness matters.",
+      "Daily: an AI coding assistant for scaffolding and refactors, LLM APIs inside products where they genuinely help, and retrieval over a project’s own documentation. He is deliberately conservative - AI where it saves time, humans where correctness matters.",
     keywords: ["ai tools", "copilot", "workflow", "daily", "assistant", "claude", "gemini"],
   },
   {
     id: "laravel",
     answer:
-      "Laravel is his deepest backend tool. He has shipped production Laravel systems for government departments — routing, queues, role-based access, reporting and large PostgreSQL datasets.",
+      "Laravel is his deepest backend tool. He has shipped production Laravel systems for government departments - routing, queues, role-based access, reporting and large PostgreSQL datasets.",
     keywords: ["laravel", "php", "backend", "framework"],
   },
   {
@@ -91,7 +91,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "design",
     answer:
-      "He designs in Figma and Adobe XD before writing code — layout, type scale, component states and motion. He cares about accessible contrast, keyboard navigation and interfaces that explain themselves.",
+      "He designs in Figma and Adobe XD before writing code - layout, type scale, component states and motion. He cares about accessible contrast, keyboard navigation and interfaces that explain themselves.",
     keywords: ["design", "ui", "ux", "figma", "adobe", "xd", "interface"],
   },
   {
@@ -104,13 +104,13 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "city-center",
     answer:
-      "City Center Store Directory is a searchable mall directory with a client-managed admin panel — Laravel, MySQL, DataTables and Bootstrap. It is live at storefinder.brahmaputracitycenter.com.",
+      "City Center Store Directory is a searchable mall directory with a client-managed admin panel - Laravel, MySQL, DataTables and Bootstrap. It is live at storefinder.brahmaputracitycenter.com.",
     keywords: ["city center", "store", "directory", "mall", "brahmaputra"],
   },
   {
     id: "egras",
     answer:
-      "eGRAS is Assam’s Government Receipt Accounting System — the portal that accepts online payment of state taxes through bank channels. He worked on the Laravel web application, the mobile companion and the PostgreSQL reporting layer, including Chart.js dashboards.",
+      "eGRAS is Assam’s Government Receipt Accounting System - the portal that accepts online payment of state taxes through bank channels. He worked on the Laravel web application, the mobile companion and the PostgreSQL reporting layer, including Chart.js dashboards.",
     keywords: ["egras", "tax", "government", "receipt", "challan", "assam"],
   },
   {
@@ -122,19 +122,19 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "icai",
     answer:
-      "ICAI Guwahati is the branch website for the Institute of Chartered Accountants of India — announcements, events and member resources, built in PHP with Bootstrap and DataTables.",
+      "ICAI Guwahati is the branch website for the Institute of Chartered Accountants of India - announcements, events and member resources, built in PHP with Bootstrap and DataTables.",
     keywords: ["icai", "chartered", "accountant", "guwahati"],
   },
   {
     id: "sheujhut",
     answer:
-      "Sheujhut is a B2B agricultural marketplace connecting sellers and buyers across Assam, with an organic-farming focus. Built in Core PHP and MySQL with REST endpoints, then packaged with Apache Cordova so the same catalogue runs on low-end Android phones — 500+ sellers and buyers across 20+ districts.",
+      "Sheujhut is a B2B agricultural marketplace connecting sellers and buyers across Assam, with an organic-farming focus. Built in Core PHP and MySQL with REST endpoints, then packaged with Apache Cordova so the same catalogue runs on low-end Android phones - 500+ sellers and buyers across 20+ districts.",
     keywords: ["sheujhut", "agriculture", "marketplace", "organic", "farmer", "cordova"],
   },
   {
     id: "nic",
     answer:
-      "NIC is India’s National Informatics Centre, the government’s technology arm. As a Senior Fullstack Developer there, he builds public platforms for Assam — payment systems, scheme portals and internal dashboards.",
+      "NIC is India’s National Informatics Centre, the government’s technology arm. As a Senior Fullstack Developer there, he builds public platforms for Assam - payment systems, scheme portals and internal dashboards.",
     keywords: ["nic", "national informatics", "government", "employer", "company"],
   },
   {
@@ -146,13 +146,13 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "open-source",
     answer:
-      "He publishes small tools and design utilities — the Custom Hover Effects collection and Personal Management System are the most visible ones. His GitHub is github.com/kangkanrajkhowa.",
+      "He publishes small tools and design utilities - the Custom Hover Effects collection and Personal Management System are the most visible ones. His GitHub is github.com/kangkanrajkhowa.",
     keywords: ["open source", "github", "repository", "contribute", "oss"],
   },
   {
     id: "resume",
     answer:
-      "There is a full résumé page at /resume, with a print-ready PDF download. It mirrors the experience and skills on this site.",
+      "There is a full resume page at /resume, with a print-ready PDF download. It mirrors the experience and skills on this site.",
     keywords: ["resume", "cv", "download", "pdf", "curriculum"],
   },
   {
@@ -170,7 +170,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "rates",
     answer:
-      "Project pricing depends on scope. Share what you need through the contact form and he will reply with an estimate — usually within a couple of days.",
+      "Project pricing depends on scope. Share what you need through the contact form and he will reply with an estimate - usually within a couple of days.",
     keywords: ["rate", "price", "cost", "budget", "quote", "charge", "pricing"],
   },
   {
@@ -182,7 +182,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "flutter",
     answer:
-      "Flutter and Dart for cross-platform mobile work — the eGRAS mobile companion is the largest example.",
+      "Flutter and Dart for cross-platform mobile work - the eGRAS mobile companion is the largest example.",
     keywords: ["flutter", "dart", "mobile", "android", "ios", "app"],
   },
   {

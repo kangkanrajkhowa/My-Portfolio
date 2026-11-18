@@ -12,7 +12,7 @@ export function About() {
         <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <div>
             <Reveal>
-              <p className="eyebrow">01 — About</p>
+              <p className="eyebrow">01 - About</p>
               <h2 className="display mt-6 text-4xl md:text-5xl">
                 Software that outlives
                 <br />

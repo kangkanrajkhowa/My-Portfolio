@@ -7,7 +7,7 @@
  *   npm run package:static -- --server nginx
  *   npm run package:static -- --server iis
  *
- * The zip is produced with Node's own zlib — no archiver dependency, and no
+ * The zip is produced with Node's own zlib - no archiver dependency, and no
  * reliance on a `zip` binary that Windows does not ship.
  */
 import fs from "node:fs/promises";
@@ -32,7 +32,7 @@ const CONFIGS = {
   },
   nginx: {
     source: "deploy/nginx/portfolio.conf",
-    // A .conf in a web root is downloadable — ship it beside the archive.
+    // A .conf in a web root is downloadable - ship it beside the archive.
     insideArchive: null,
   },
 };
@@ -43,13 +43,13 @@ const config = CONFIGS[server];
 
 if (!config) {
   console.error(
-    `[package] unknown server "${server}" — expected one of: ${Object.keys(CONFIGS).join(", ")}`,
+    `[package] unknown server "${server}" - expected one of: ${Object.keys(CONFIGS).join(", ")}`,
   );
   process.exit(1);
 }
 
 if (!(await fs.stat(outDir).catch(() => null))) {
-  console.error("[package] out/ is missing — run `npm run build` first.");
+  console.error("[package] out/ is missing - run `npm run build` first.");
   process.exit(1);
 }
 
@@ -209,7 +209,7 @@ if (!config.insideArchive) {
   const beside = path.join(distDir, `${DOMAIN}-nginx.conf`);
   await fs.writeFile(beside, configData);
   console.log(
-    `[package] wrote ${path.relative(root, beside)} — upload it to /etc/nginx/sites-available/ on the server, not the web root.`,
+    `[package] wrote ${path.relative(root, beside)} - upload it to /etc/nginx/sites-available/ on the server, not the web root.`,
   );
 }
 

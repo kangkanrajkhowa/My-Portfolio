@@ -32,7 +32,7 @@ export function Stats() {
       <div className="shell">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow">05 — Live from GitHub</p>
+            <p className="eyebrow">05 - Live from GitHub</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">
               Receipts, not <span className="serif text-lime">claims</span>.
             </h2>

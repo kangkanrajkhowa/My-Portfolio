@@ -44,7 +44,7 @@ export const groupMeta: Record<
   ai: {
     label: "AI & ML",
     blurb:
-      "Currently learning: LLMs, model providers, retrieval, agents and automation — explored in side projects.",
+      "Currently learning: LLMs, model providers, retrieval, agents and automation - explored in side projects.",
     accent: "#FFD166",
   },
 };

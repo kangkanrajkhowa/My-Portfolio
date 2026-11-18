@@ -28,7 +28,7 @@ export const projects: Project[] = [
     approach:
       "Built a searchable directory on Laravel with a role-based admin panel, DataTables-powered listing and a normalised MySQL schema for stores, categories and floor locations.",
     outcome:
-      "The client now maintains its own store list, and visitors can find a shop by name, category or floor — all from a single mobile-friendly page.",
+      "The client now maintains its own store list, and visitors can find a shop by name, category or floor - all from a single mobile-friendly page.",
     stack: ["Laravel", "MySQL", "Bootstrap", "JavaScript", "DataTables", "Lodash"],
     links: [
       { label: "Live site", href: "https://storefinder.brahmaputracitycenter.com/" },
@@ -42,7 +42,7 @@ export const projects: Project[] = [
     title: "Personal Management System",
     category: "Product",
     summary:
-      "A central place to organise personal data — notes, records and day-to-day admin — instead of scattering it across apps.",
+      "A central place to organise personal data - notes, records and day-to-day admin - instead of scattering it across apps.",
     problem:
       "Personal records lived in spreadsheets, notes apps and paper. Nothing could be searched, cross-referenced or trusted.",
     approach:
@@ -65,7 +65,7 @@ export const projects: Project[] = [
     title: "Custom Hover Effects",
     category: "Open source",
     summary:
-      "A collection of CSS-powered hover effects for links, buttons, logos, SVG and featured images — copy, paste, ship.",
+      "A collection of CSS-powered hover effects for links, buttons, logos, SVG and featured images - copy, paste, ship.",
     problem:
       "Most “hover effect” snippets online are bloated with JavaScript, break keyboard focus, or never account for reduced motion.",
     approach:
@@ -82,7 +82,7 @@ export const projects: Project[] = [
   {
     slug: "egras-assam-web",
     index: "04",
-    title: "eGRAS Assam — Web",
+    title: "eGRAS Assam - Web",
     category: "Government",
     summary:
       "The Government Receipt Accounting System that accepts online payment of Assam state taxes through bank portals.",
@@ -100,7 +100,7 @@ export const projects: Project[] = [
   {
     slug: "egras-assam-mobile",
     index: "05",
-    title: "eGRAS Assam — Mobile",
+    title: "eGRAS Assam - Mobile",
     category: "Government",
     summary:
       "The Android and iOS companion to eGRAS for e-Challan payment processing and tracking on the move.",
@@ -163,7 +163,7 @@ export const projects: Project[] = [
     problem:
       "Small growers and traders in rural districts had no shared catalogue, so produce moved through phone calls and middlemen with no visibility on price or availability.",
     approach:
-      "Built a Core PHP and MySQL marketplace with seller and buyer accounts, category browsing and REST endpoints — then wrapped it with Apache Cordova so the same catalogue worked on low-end Android phones.",
+      "Built a Core PHP and MySQL marketplace with seller and buyer accounts, category browsing and REST endpoints - then wrapped it with Apache Cordova so the same catalogue worked on low-end Android phones.",
     outcome:
       "500+ sellers and buyers across 20+ districts trade through one platform, with rural reach up 40% and roughly ₹2 lakh in monthly transactions flowing through it.",
     stack: [

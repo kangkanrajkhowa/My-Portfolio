@@ -18,7 +18,7 @@ export function Answers() {
       <div className="shell">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow">06 — Answers</p>
+            <p className="eyebrow">06 - Answers</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">
               Questions people
               <br />
@@ -26,7 +26,7 @@ export function Answers() {
             </h2>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-muted">
-            Written down rather than guessed at — no chat window, no tracking,
+            Written down rather than guessed at - no chat window, no tracking,
             just the short version of each answer.
           </p>
         </div>

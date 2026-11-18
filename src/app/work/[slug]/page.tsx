@@ -34,7 +34,7 @@ export async function generateMetadata({
     keywords: [...project.stack, project.category, "case study"],
     alternates: { canonical: absoluteUrl(`/work/${project.slug}/`) },
     openGraph: {
-      title: `${project.title} — ${SITE_NAME}`,
+      title: `${project.title} - ${SITE_NAME}`,
       description: project.summary,
       type: "article",
       url: absoluteUrl(`/work/${project.slug}/`),
@@ -44,7 +44,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} — ${SITE_NAME}`,
+      title: `${project.title} - ${SITE_NAME}`,
       description: project.summary,
       images: [asset("/og.png")],
     },

@@ -81,7 +81,7 @@ export function Contact() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: ACCESS_KEY,
-          subject: `Portfolio enquiry — ${form.name}`,
+          subject: `Portfolio enquiry - ${form.name}`,
           from_name: "My Portfolio",
           name: form.name,
           email: form.email,
@@ -94,11 +94,11 @@ export function Contact() {
       if (!response.ok || !data.success) throw new Error("Submission failed");
 
       setStatus("success");
-      toast("Message sent — thank you!");
+      toast("Message sent - thank you!");
       setForm({ name: "", email: "", budget: budgets[0], message: "", company: "" });
     } catch {
       setStatus("error");
-      toast("Could not send — email me directly instead.");
+      toast("Could not send - email me directly instead.");
     }
   };
 
@@ -114,7 +114,7 @@ export function Contact() {
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           <div>
-            <p className="eyebrow">07 — Contact</p>
+            <p className="eyebrow">07 - Contact</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">
               Don&apos;t be shy.
               <br />
@@ -123,7 +123,7 @@ export function Contact() {
             <p className="mt-5 max-w-md text-sm leading-relaxed text-muted">
               Have a product to build, an old system to rescue, or an AI idea that
               needs a reality check? Send the details and I will reply with
-              questions and an estimate — usually within two working days.
+              questions and an estimate - usually within two working days.
             </p>
 
             <div className="mt-10 space-y-1">
@@ -189,7 +189,7 @@ export function Contact() {
           <div className="card p-6 md:p-8">
             {!ACCESS_KEY && (
               <p className="mb-5 rounded-xl border border-line bg-bg/60 px-4 py-3 text-[11px] leading-relaxed text-muted">
-                The form is not connected to an inbox yet — submitting opens your
+                The form is not connected to an inbox yet - submitting opens your
                 email app with everything prefilled. (Set{" "}
                 <code className="text-fg">NEXT_PUBLIC_WEB3FORMS_KEY</code> to
                 enable direct delivery.)
@@ -203,7 +203,7 @@ export function Contact() {
                 </span>
                 <h3 className="display mt-6 text-2xl">Message sent.</h3>
                 <p className="mt-2 max-w-xs text-sm text-muted">
-                  Thank you — I will get back to you at the email you provided.
+                  Thank you - I will get back to you at the email you provided.
                 </p>
                 <button
                   type="button"

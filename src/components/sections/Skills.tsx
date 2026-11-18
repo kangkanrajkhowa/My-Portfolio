@@ -73,12 +73,12 @@ export function Skills() {
         <div className="shell">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow">02 — Toolkit</p>
+            <p className="eyebrow">02 - Toolkit</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">
               I develop skills <span className="serif text-lime">regularly</span>.
             </h2>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted md:text-base">
-              Most days are spent learning and building — starting from scratch,
+              Most days are spent learning and building - starting from scratch,
               or adding the customised features that make an ageing system shine
               again.
             </p>
@@ -262,7 +262,7 @@ export function Skills() {
                 );
               })}
             </div>            <p className="mt-4 border-t border-line pt-3.5 text-[11px] text-muted">
-              Each track fills to my depth — a full bar means I ship with it
+              Each track fills to my depth - a full bar means I ship with it
               daily, a short one means I&apos;m still learning.
             </p>
           </div>

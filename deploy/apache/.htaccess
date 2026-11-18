@@ -1,9 +1,9 @@
 # =============================================================================
-# kangkan.in — Apache 2.4 and LiteSpeed
+# kangkan.in - Apache 2.4 and LiteSpeed
 #
 # Upload this file to the document root of the site (usually public_html) and
 # rename it to `.htaccess`. Works unchanged on Hostinger (LiteSpeed), BigRock,
-# Namecheap and GoDaddy (cPanel/Apache) — LiteSpeed reads .htaccess directives.
+# Namecheap and GoDaddy (cPanel/Apache) - LiteSpeed reads .htaccess directives.
 #
 # If the site 500s after upload, the host restricts one of these directives via
 # AllowOverride. Comment out the section named in the error_log and re-upload.
@@ -25,7 +25,7 @@ ErrorDocument 404 /404.html
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 
-  # 2. Force HTTPS. Required for .dev, which is on the HSTS preload list —
+  # 2. Force HTTPS. Required for .dev, which is on the HSTS preload list -
   #    plain HTTP is never even attempted by the browser.
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !https

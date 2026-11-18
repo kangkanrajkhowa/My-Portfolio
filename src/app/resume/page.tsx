@@ -10,7 +10,7 @@ import { SITE_URL, absoluteUrl, asset } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Resume",
   description:
-    "Résumé of Kangkan Rajkhowa — full-stack developer with 5+ years in secure e-governance and payment systems for the Government of Assam. PHP, Laravel, Oracle and PostgreSQL.",
+    "Resume of Kangkan Rajkhowa - full-stack developer with 5+ years in secure e-governance and payment systems for the Government of Assam. PHP, Laravel, Oracle and PostgreSQL.",
   keywords: [
     "Kangkan Rajkhowa resume",
     "full stack developer CV Guwahati",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: absoluteUrl("/resume/") },
   openGraph: {
-    title: "Kangkan Rajkhowa — Résumé",
+    title: "Kangkan Rajkhowa - Resume",
     description:
       "Full-stack developer, 5+ years of e-governance and payment platforms for 100,000+ users. PHP, Laravel, Oracle, PostgreSQL.",
     url: absoluteUrl("/resume/"),
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
 };
 
-/** CV project order — the five client and government builds that carry the résumé. */
+/** CV project order - the five client and government builds that carry the resume. */
 const resumeProjectSlugs = [
   "egras-assam-web",
   "atmanirbhar-assam",
@@ -122,7 +122,7 @@ export default function ResumePage() {
               <div key={`${item.role}-${item.org}`}>
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h3 className="text-[13px] font-semibold">
-                    {item.role} — {item.org}
+                    {item.role} - {item.org}
                   </h3>
                   <span className="text-[11px] text-neutral-500">
                     {item.period}
@@ -193,7 +193,7 @@ export default function ResumePage() {
               References
             </h2>
             <p className="mt-2 text-[12px] leading-relaxed text-neutral-700">
-              Available on request — scientist and project-lead referees at NIC.
+              Available on request - scientist and project-lead referees at NIC.
             </p>
           </div>
         </section>
@@ -205,7 +205,7 @@ export default function ResumePage() {
       </article>
 
       <p className="no-print mt-6 text-center text-[11px] text-muted">
-        Print this page or download the PDF — both come from this same source.
+        Print this page or download the PDF - both come from this same source.
       </p>
     </main>
   );

@@ -49,7 +49,7 @@ const html = `<!doctype html>
     <h1>Senior fullstack<br /><em>developer</em>.</h1>
 
     <div class="bottom">
-      <p>Kangkan Rajkhowa — Laravel, React, PostgreSQL and practical AI. Building payment and e-governance platforms for Assam.</p>
+      <p>Kangkan Rajkhowa - Laravel, React, PostgreSQL and practical AI. Building payment and e-governance platforms for Assam.</p>
       <div class="badges">
         <span class="badge hot">E-Governance &amp; Payments</span>
         <span class="badge">@ NIC, Assam</span>

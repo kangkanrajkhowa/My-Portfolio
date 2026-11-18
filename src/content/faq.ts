@@ -3,7 +3,7 @@ import type { KnowledgeEntry } from "@/content/knowledge";
 /**
  * The questions worth asking out loud, grouped for the static answers section.
  * Each one points at an entry in `knowledge` so there is a single place where
- * the facts live — the section only decides wording and order.
+ * the facts live - the section only decides wording and order.
  */
 export type FaqItem = { question: string; entryId: KnowledgeEntry["id"] };
 

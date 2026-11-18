@@ -11,26 +11,26 @@ const port = 4188;
 
 /**
  * Education belongs in the CV document but is deliberately not published on the
- * site, so it is injected into the print copy only — this lives outside src/ so
+ * site, so it is injected into the print copy only - this lives outside src/ so
  * no page, sitemap entry or structured data can pick it up.
  */
 const education = [
   {
     degree: "Master of Computer Applications (MCA)",
     org: "Cotton University",
-    period: "Aug 2015 — Jun 2018",
+    period: "Aug 2015 - Jun 2018",
     location: "Guwahati, Assam",
   },
   {
     degree: "B.Sc in Zoology",
     org: "Chaiduar College, Gauhati University",
-    period: "Aug 2012 — Jul 2015",
+    period: "Aug 2012 - Jul 2015",
     location: "Gohpur, Assam",
   },
 ];
 
 if (!(await fs.stat(outDir).catch(() => null))) {
-  console.error("[pdf] out/ is missing — run `npm run build` first.");
+  console.error("[pdf] out/ is missing - run `npm run build` first.");
   process.exit(1);
 }
 

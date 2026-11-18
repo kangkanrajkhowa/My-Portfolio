@@ -32,7 +32,7 @@ export function Work() {
     }
 
     // Native smooth scrolling is unreliable inside a scroll-snap row, so
-    // ease the offset ourselves — it works the same in every browser.
+    // ease the offset ourselves - it works the same in every browser.
     const start = el.scrollLeft;
     const change = target - start;
     const started = performance.now();
@@ -60,14 +60,14 @@ export function Work() {
       <div className="flex min-h-[100svh] flex-col justify-center py-20">
         <div className="shell flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="eyebrow">03 — Selected work</p>
+            <p className="eyebrow">03 - Selected work</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">
               See my work which will{" "}
               <span className="serif text-lime">amaze</span> you.
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-relaxed text-muted">
-            A few things I have designed, built and maintained — from a mall
+            A few things I have designed, built and maintained - from a mall
             directory a client updates themselves, to tax systems used across
             Assam.
           </p>
@@ -184,7 +184,7 @@ export function Work() {
 
           </div>
 
-          {/* Arrow navigation — scrolls the row one card at a time */}
+          {/* Arrow navigation - scrolls the row one card at a time */}
           <button
             type="button"
             onClick={() => scrollCards(-1)}

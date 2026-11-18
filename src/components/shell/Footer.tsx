@@ -62,7 +62,7 @@ export function Footer() {
         </div>
 
         <p className="mt-6 text-[11px] text-muted">
-          Portfolio — Guwahati, Assam · {profile.availability}
+          Portfolio - Guwahati, Assam · {profile.availability}
         </p>
       </div>
     </footer>

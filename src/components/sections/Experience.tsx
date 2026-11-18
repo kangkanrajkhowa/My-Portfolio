@@ -7,7 +7,7 @@ export function Experience() {
       <div className="shell">
         <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <p className="eyebrow">04 — Experience</p>
+            <p className="eyebrow">04 - Experience</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">
               Where the work
               <br />

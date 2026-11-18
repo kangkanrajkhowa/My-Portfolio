@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_TITLE,
-    template: `%s — ${SITE_NAME}`,
+    template: `%s - ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
         url: asset("/og.png"),
         width: 1200,
         height: 630,
-        alt: "Kangkan Rajkhowa — Senior Fullstack Developer",
+        alt: "Kangkan Rajkhowa - Senior Fullstack Developer",
       },
     ],
   },
