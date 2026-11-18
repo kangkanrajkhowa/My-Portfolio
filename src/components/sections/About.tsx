@@ -118,7 +118,7 @@ export function About() {
 
             <Reveal delay={120} className="mt-8 flex flex-wrap gap-2">
               {[
-                "Senior developer @ NIC",
+                "Senior Software Developer @ NIC",
                 "Freelance evenings",
                 "Open source",
                 "Guwahati, IN",

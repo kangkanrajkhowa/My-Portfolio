@@ -15,7 +15,7 @@ export type ExperienceItem = {
  */
 export const experience: ExperienceItem[] = [
   {
-    role: "Software Developer",
+    role: "Senior Software Developer",
     org: "National Informatics Centre (NIC)",
     period: "Jun 2020 — Present",
     location: "Guwahati, Assam",

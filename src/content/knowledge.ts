@@ -13,7 +13,7 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "who",
     answer:
-      "Kangkan Rajkhowa is a fullstack developer and product engineer from Guwahati, Assam. He works as a senior developer at the National Informatics Centre (NIC) during the day and takes on freelance product work in the evenings.",
+      "Kangkan Rajkhowa is a fullstack developer and product engineer from Guwahati, Assam. He works as a Senior Software Developer at the National Informatics Centre (NIC) during the day and takes on freelance product work in the evenings.",
     keywords: ["who", "about", "kangkan", "intro", "yourself", "profile"],
     followUps: ["What is his stack?", "Show me his best projects"],
   },
@@ -128,13 +128,13 @@ export const knowledge: KnowledgeEntry[] = [
   {
     id: "nic",
     answer:
-      "NIC is India’s National Informatics Centre, the government’s technology arm. As a senior developer there, he builds public platforms for Assam — payment systems, scheme portals and internal dashboards.",
+      "NIC is India’s National Informatics Centre, the government’s technology arm. As a Senior Software Developer there, he builds public platforms for Assam — payment systems, scheme portals and internal dashboards.",
     keywords: ["nic", "national informatics", "government", "employer", "company"],
   },
   {
     id: "experience",
     answer:
-      "Senior developer at NIC, freelance developer and designer for small businesses, and an ongoing open-source contributor. The experience section of this page has the details.",
+      "Senior Software Developer at the National Informatics Centre (NIC), freelance developer and designer for small businesses, and an ongoing open-source contributor. The experience section of this page has the details.",
     keywords: ["experience", "career", "years", "background", "history", "worked"],
   },
   {

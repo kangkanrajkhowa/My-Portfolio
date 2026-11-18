@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-31T17:33:21.028Z",
+  "generatedAt": "2026-11-18T16:57:25.790Z",
   "user": {
     "login": "kangkanrajkhowa",
     "name": "KANGKAN RAJKHOWA",
     "publicRepos": 39,
-    "followers": 4,
+    "followers": 5,
     "following": 2,
     "createdAt": "2017-03-07T15:06:23Z"
   },
@@ -17,7 +17,7 @@
   "languages": [
     {
       "name": "CSS",
-      "bytes": 6177555
+      "bytes": 6175810
     },
     {
       "name": "PHP",
@@ -25,11 +25,11 @@
     },
     {
       "name": "JavaScript",
-      "bytes": 1062109
+      "bytes": 1062235
     },
     {
       "name": "TypeScript",
-      "bytes": 772547
+      "bytes": 772834
     },
     {
       "name": "SCSS",
@@ -56,7 +56,7 @@
       "stars": 0,
       "forks": 0,
       "url": "https://github.com/kangkanrajkhowa/My-Portfolio",
-      "pushedAt": "2026-10-31T17:12:38Z"
+      "pushedAt": "2026-11-18T16:40:00Z"
     },
     {
       "name": "kangkanrajkhowa",

@@ -144,7 +144,7 @@ export default function RootLayout({
         name: profile.name,
         givenName: profile.firstName,
         familyName: profile.lastName,
-        jobTitle: "Full-Stack Developer",
+        jobTitle: "Senior Software Developer",
         description: SITE_DESCRIPTION,
         url: origin,
         image: absoluteUrl("/og.png"),
