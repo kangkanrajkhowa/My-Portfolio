@@ -46,7 +46,7 @@ const html = `<!doctype html>
       <span>Portfolio 2026</span>
     </div>
 
-    <h1>Senior software<br /><em>developer</em>.</h1>
+    <h1>Senior fullstack<br /><em>developer</em>.</h1>
 
     <div class="bottom">
       <p>Kangkan Rajkhowa — Laravel, React, PostgreSQL and practical AI. Building payment and e-governance platforms for Assam.</p>
